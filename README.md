@@ -1,8 +1,16 @@
 # About me
 
-I am a graduate student at Northeastern University. I have worked at Bhaskaracharya Institute of Space Application and Geo-Informatics, India as a Trainee.
+I am a graduate student at Northeastern University. 
 
-Below mentioned are some of my projects:
+### Work Experience  
+
+Bhaskaracharya Institute of Space Application and Geo-Informatics, India
+Trainee
+* Developed solutions for Android applications by analyzing user requirements and evaluating problem definition
+* Formulated and implemented test strategies for application software
+
+
+### Projects
 
 * Search Engine: Implemented BM25 and tf-idf retrieval models using pseudo relevance feedback as a query expansion technique, leading to an increase of 25.51% and 88.03% in the Mean Average Precision value respectively.
 
