@@ -19,23 +19,39 @@ body{
 }
 
 .nhs-widget .nhs-toolbar{
+  margin-right: 15px;
   position: absolute;
   right: 0px;
-  background-color: gray;
+  background-color: lightgrey;
   padding: 6px;
   border-bottom-left-radius: 10px;
 }
 
-.nhs-widget .nhs-content{
+.nhs-widget .nhs-image{
   width: 100%;
+  margin-bottom: 5px;
+}
+
+.nhs-widget .nhs-frame{
+  width: 560px;
   height: 315px;
+  margin-bottom: 5px;
 }
 
 .nhs-widget .nhs-transparent-toolbar{
+  margin-right: 15px;
   position: absolute;
   right: 0px;
-  background-color: gray;
+  background-color: lightgrey;
   padding: 6px;
   border-bottom-left-radius: 10px;
   opacity: 0.5;
+}
+
+.list-group-item a:hover{
+  text-decoration: none;
+}
+
+.glyphicon-eye-open{
+  margin-left: 10px;
 }
