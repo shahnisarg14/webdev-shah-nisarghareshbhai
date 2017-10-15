@@ -81,7 +81,8 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html" class="navbar-link">
+      <a [routerLink]="['/user', userId]"
+         class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>
     </div>

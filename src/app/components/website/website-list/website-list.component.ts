@@ -10,12 +10,16 @@ import {Website} from '../../../models/website.model.client';
 })
 export class WebsiteListComponent implements OnInit {
 userId: string;
+websiteId: string;
+website: Website;
   constructor(private websiteService: WebsiteService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
+      this.websiteId = params['wid'];
+      this.website = this.websiteService.findWebsiteById(this.websiteId);
     });
   }
   fetchWebsites() {

@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import {forEach} from '@angular/router/src/utils/collection';
 import { Website } from '../models/website.model.client';
-import {getContentOfKeyLiteral} from "@angular/cli/lib/ast-tools";
+import {getContentOfKeyLiteral} from '@angular/cli/lib/ast-tools';
 
 // injecting service into module
 @Injectable()
@@ -34,7 +34,7 @@ export class WebsiteService {
   };
 
   createWebsite(userId: string, website: Website) {
-    const new_website = { _id: Math.random().toString(),
+    const new_website = { _id: (Math.floor((Math.random() * 2001) + 2000)).toString(),
       name: website.name,
       developerId: userId,
       description: website.description}

@@ -16,6 +16,10 @@ import { WebsiteListComponent } from './components/website/website-list/website-
 import { WebsiteService } from './services/website.service.client';
 import { WebsiteEditComponent } from './components/website/website-edit/website-edit.component';
 import { WebsiteNewComponent } from './components/website/website-new/website-new.component';
+import {PageListComponent} from './components/page/page-list/page-list.component';
+import {PageService} from './services/page.service.client';
+import {PageNewComponent} from './components/page/page-new/page-new.component';
+import {PageEditComponent} from './components/page/page-edit/page-edit.component';
 
 @NgModule({
   // Declare components here
@@ -28,7 +32,10 @@ import { WebsiteNewComponent } from './components/website/website-new/website-ne
     RegisterComponent,
     WebsiteEditComponent,
     WebsiteListComponent,
-    WebsiteNewComponent
+    WebsiteNewComponent,
+    PageListComponent,
+    PageNewComponent,
+    PageEditComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +44,7 @@ import { WebsiteNewComponent } from './components/website/website-new/website-ne
     Routing
   ],
   // Client Side services here
-  providers: [TestService, UserService, WebsiteService],
+  providers: [TestService, UserService, WebsiteService, PageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

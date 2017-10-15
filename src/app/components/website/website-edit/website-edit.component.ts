@@ -24,12 +24,12 @@ export class WebsiteEditComponent implements OnInit {
       this.userId = params['uid'];
       this.websiteId = params['wid'];
     });
-      this.website = this.websiteService.findWebsiteById(this.websiteId);
-      this.name = this.website.name;
-      this.description = this.website.description;
   }
 
   fetchWebsites() {
+    this.website = this.websiteService.findWebsiteById(this.websiteId);
+    this.name = this.website.name;
+    this.description = this.website.description;
     const websites: Website[] = this.websiteService.findWebsitesByUser(this.userId);
     return websites;
   }

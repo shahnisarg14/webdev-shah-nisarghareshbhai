@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="../website/website-list.html"
+      <a [routerLink]="['/user', userId, 'website']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="page-new.html"
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', 'new']"
          class="navbar-link">
         <span class="glyphicon glyphicon-plus colorWhite"></span>
       </a>
@@ -24,47 +24,15 @@
 
 <div class="container-fluid">
   <ul class="list-group">
-
+    <div *ngFor="let page of fetchPages()">
     <li class="list-group-item">
-      <a href="../widget/widget-list.html">Blog Post</a>
-      <a href="page-edit.html"
+      <a href="../widget/widget-list.html">{{page.name}}</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', page._id]"
          class="pull-right">
         <span class="glyphicon-cog glyphicon"></span>
       </a>
     </li>
-
-    <li class="list-group-item">
-      <a href="../widget/widget-list.html">Blogs</a>
-      <a href="page-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
-    <li class="list-group-item">
-      <a href="../widget/widget-list.html">Home</a>
-      <a href="page-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
-    <li class="list-group-item">
-      <a href="../widget/widget-list.html">About</a>
-      <a href="page-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
-    <li class="list-group-item">
-      <a href="../widget/widget-list.html">Contact Us</a>
-      <a href="page-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
+    </div>
   </ul>
 </div>
 
@@ -72,7 +40,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>

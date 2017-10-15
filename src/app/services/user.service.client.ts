@@ -31,7 +31,7 @@ export class UserService {
   };
 
   createUser(user: User) {
-    user._id = '' + (Math.floor((Math.random() * 1001) + 1000));
+    user._id = (Math.floor((Math.random() * 1001) + 1000)).toString();
     this.users.push(user);
     return user;
   }
