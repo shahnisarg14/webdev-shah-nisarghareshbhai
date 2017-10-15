@@ -94,12 +94,14 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_website_website_list_website_list_component__ = __webpack_require__("../../../../../src/app/components/website/website-list/website-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_website_service_client__ = __webpack_require__("../../../../../src/app/services/website.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_website_website_edit_website_edit_component__ = __webpack_require__("../../../../../src/app/components/website/website-edit/website-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_website_website_new_website_new_component__ = __webpack_require__("../../../../../src/app/components/website/website-new/website-new.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -132,7 +134,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__components_user_profile_profile_component__["a" /* ProfileComponent */],
             __WEBPACK_IMPORTED_MODULE_11__components_user_register_register_component__["a" /* RegisterComponent */],
             __WEBPACK_IMPORTED_MODULE_15__components_website_website_edit_website_edit_component__["a" /* WebsiteEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__components_website_website_list_website_list_component__["a" /* WebsiteListComponent */]
+            __WEBPACK_IMPORTED_MODULE_13__components_website_website_list_website_list_component__["a" /* WebsiteListComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__components_website_website_new_website_new_component__["a" /* WebsiteNewComponent */]
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -163,9 +166,11 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_user_register_register_component__ = __webpack_require__("../../../../../src/app/components/user/register/register.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_website_website_list_website_list_component__ = __webpack_require__("../../../../../src/app/components/website/website-list/website-list.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_website_website_edit_website_edit_component__ = __webpack_require__("../../../../../src/app/components/website/website-edit/website-edit.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_website_website_new_website_new_component__ = __webpack_require__("../../../../../src/app/components/website/website-new/website-new.component.ts");
 /**
  * Created by sesha on 7/26/17.
  */
+
 
 
 
@@ -181,6 +186,7 @@ var APP_ROUTES = [
     { path: 'register', component: __WEBPACK_IMPORTED_MODULE_5__components_user_register_register_component__["a" /* RegisterComponent */] },
     { path: 'user/:uid', component: __WEBPACK_IMPORTED_MODULE_4__components_user_profile_profile_component__["a" /* ProfileComponent */] },
     { path: 'user/:uid/website', component: __WEBPACK_IMPORTED_MODULE_6__components_website_website_list_website_list_component__["a" /* WebsiteListComponent */] },
+    { path: 'user/:uid/website/new', component: __WEBPACK_IMPORTED_MODULE_8__components_website_website_new_website_new_component__["a" /* WebsiteNewComponent */] },
     { path: 'user/:uid/website/:wid', component: __WEBPACK_IMPORTED_MODULE_7__components_website_website_edit_website_edit_component__["a" /* WebsiteEditComponent */] }
 ];
 // Export the routes as module providers
@@ -610,7 +616,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/website/website-edit/website-edit.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n\n      <div class=\"col-sm-4\">\n        <div class=\"navbar-text pull-left\">\n          <a href=\"website-list.html\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\n          </a>\n        </div>\n\n        <div class=\" navbar-header hidden-xs\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">Websites</b>\n          </a>\n        </div>\n\n        <div class=\"navbar-text pull-right hidden-xs\">\n          <a href=\"website-new.html\" class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-plus colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n      <div class=\"col-sm-8\">\n        <div class=\" navbar-header pull-left\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">Edit Website</b></a>\n        </div>\n\n        <div class=\"navbar-text pull-right\">\n          <a href=\"website-list.html\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-sm-4 hidden-xs\">\n      <ul class=\"list-group\">\n        <div *ngFor=\"let website of fetchWebsites()\">\n          <li class=\"list-group-item\">\n            <a href=\"#\">{{website.name}}</a>\n            <a href=\"website-edit.html\"\n               class=\"pull-right\">\n              <span class=\"glyphicon-cog glyphicon\"></span>\n            </a>\n          </li>\n        </div>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n      <label>Website Name</label>\n      <input [(ngModel)]=\"name\"\n             value=\"Blogger\"\n             placeholder=\"website name\"\n             type=\"text\"\n             id=\"websitename\"\n             class=\"form-control\"/>\n      <label>Website Description</label>\n      <textarea [(ngModel)]=\"description\"\n                placeholder=\"Description for your website\"\n                rows=\"5\"\n                id=\"websitedescription\"\n                class=\"form-control\">Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries. It was develloped by Pyra Labs, which was bought by Google in 2003.</textarea>\n      <a href=\"website-list.html\"\n         class=\"btn btn-danger btn-block\">\n        Delete\n      </a>\n    </div>\n\n  </div>\n</div>\n\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId]\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n\n      <div class=\"col-sm-4\">\n        <div class=\"navbar-text pull-left\">\n          <a [routerLink]=\"['/user', userId, 'website']\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\n          </a>\n        </div>\n\n        <div class=\" navbar-header hidden-xs\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">Websites</b>\n          </a>\n        </div>\n\n        <div class=\"navbar-text pull-right hidden-xs\">\n          <a [routerLink]=\"['/user', userId, 'website','new']\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-plus colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n      <div class=\"col-sm-8\">\n        <div class=\" navbar-header pull-left\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">Edit Website</b></a>\n        </div>\n\n        <div class=\"navbar-text pull-right\">\n          <a (click)=\"updateWebsite(name, description)\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-sm-4 hidden-xs\">\n      <ul class=\"list-group\">\n        <div *ngFor=\"let website of fetchWebsites()\">\n          <li class=\"list-group-item\">\n            <a href=\"#\">{{website.name}}</a>\n            <a href=\"website-edit.html\"\n               class=\"pull-right\">\n              <span class=\"glyphicon-cog glyphicon\"></span>\n            </a>\n          </li>\n        </div>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n      <label>Website Name</label>\n      <input [(ngModel)]=\"name\"\n             value=\"Blogger\"\n             placeholder=\"website name\"\n             type=\"text\"\n             id=\"websitename\"\n             class=\"form-control\"/>\n      <label>Website Description</label>\n      <textarea [(ngModel)]=\"description\"\n                placeholder=\"Description for your website\"\n                rows=\"5\"\n                id=\"websitedescription\"\n                class=\"form-control\">Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries. It was develloped by Pyra Labs, which was bought by Google in 2003.</textarea>\n      <a (click)=\"deleteWebsite()\"\n         class=\"btn btn-danger btn-block\">\n        Delete\n      </a>\n    </div>\n\n  </div>\n</div>\n\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId]\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n\n"
 
 /***/ }),
 
@@ -622,6 +628,7 @@ module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__ = __webpack_require__("../../../../../src/app/services/website.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_website_model_client__ = __webpack_require__("../../../../../src/app/models/website.model.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -634,24 +641,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var WebsiteEditComponent = (function () {
-    function WebsiteEditComponent(websiteService, route) {
+    function WebsiteEditComponent(websiteService, route, router) {
         this.websiteService = websiteService;
         this.route = route;
+        this.router = router;
     }
     WebsiteEditComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params.subscribe(function (params) {
             _this.userId = params['uid'];
             _this.websiteId = params['wid'];
-            _this.website = _this.websiteService.findWebsiteById(_this.websiteId);
-            _this.name = _this.website.name;
-            _this.description = _this.website.description;
         });
+        this.website = this.websiteService.findWebsiteById(this.websiteId);
+        this.name = this.website.name;
+        this.description = this.website.description;
     };
     WebsiteEditComponent.prototype.fetchWebsites = function () {
         var websites = this.websiteService.findWebsitesByUser(this.userId);
         return websites;
+    };
+    WebsiteEditComponent.prototype.updateWebsite = function (name, description) {
+        var website = new __WEBPACK_IMPORTED_MODULE_3__models_website_model_client__["a" /* Website */](this.websiteId, name, this.userId, description);
+        if (this.websiteService.updateWebsite(this.websiteId, website)) {
+            this.router.navigate(['/user', this.userId, 'website']);
+        }
+    };
+    WebsiteEditComponent.prototype.deleteWebsite = function () {
+        if (this.websiteService.deleteWebsite(this.websiteId)) {
+            this.router.navigate(['/user', this.userId, 'website']);
+        }
     };
     return WebsiteEditComponent;
 }());
@@ -661,10 +681,10 @@ WebsiteEditComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/website/website-edit/website-edit.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/website/website-edit/website-edit.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object])
 ], WebsiteEditComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=website-edit.component.js.map
 
 /***/ }),
@@ -690,7 +710,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/website/website-list/website-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-left\">\n      <a href=\"../user/profile.html\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\n      </a>\n    </div>\n\n    <a class=\"navbar-brand\">\n      <b class=\"colorWhite\">Websites</b>\n    </a>\n\n    <div class=\"navbar-text pull-right\">\n      <a href=\"website-new.html\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-plus colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <ul class=\"list-group\">\n\n    <li class=\"list-group-item\">\n      <a href=\"../page/page-list.html\">Address Book App</a>\n      <a href=\"website-edit.html\"\n         class=\"pull-right\">\n        <span class=\"glyphicon-cog glyphicon\"></span>\n      </a>\n    </li>\n\n    <li class=\"list-group-item\">\n      <a href=\"../page/page-list.html\">Blogger</a>\n      <a href=\"website-edit.html\"\n         class=\"pull-right\">\n        <span class=\"glyphicon-cog glyphicon\"></span>\n      </a>\n    </li>\n\n    <li class=\"list-group-item\">\n      <a href=\"../page/page-list.html\">Blogging App</a>\n      <a href=\"website-edit.html\"\n         class=\"pull-right\">\n        <span class=\"glyphicon-cog glyphicon\"></span>\n      </a>\n    </li>\n\n    <li class=\"list-group-item\">\n      <a href=\"../page/page-list.html\">Script Testing App</a>\n      <a href=\"website-edit.html\"\n         class=\"pull-right\">\n        <span class=\"glyphicon-cog glyphicon\"></span>\n      </a>\n    </li>\n\n  </ul>\n</div>\n\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-right\">\n      <a href=\"../user/profile.html\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-left\">\n      <a [routerLink]=\"['/user', userId]\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\n      </a>\n    </div>\n\n    <a class=\"navbar-brand\">\n      <b class=\"colorWhite\">Websites</b>\n    </a>\n\n    <div class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId, 'website', 'new']\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-plus colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <ul class=\"list-group\">\n    <div *ngFor=\"let website of fetchWebsites()\">\n    <li class=\"list-group-item\">\n      <a href=\"#\">{{website.name}}</a>\n      <a [routerLink]=\"['/user', userId, 'website', website._id]\"\n         class=\"pull-right\">\n        <span class=\"glyphicon-cog glyphicon\"></span>\n      </a>\n    </li>\n    </div>\n\n  </ul>\n</div>\n\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-right\">\n      <a [routerLink]=\"['/user', userId]\"\n         class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -700,6 +720,8 @@ module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsiteListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__ = __webpack_require__("../../../../../src/app/services/website.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -710,10 +732,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var WebsiteListComponent = (function () {
-    function WebsiteListComponent() {
+    function WebsiteListComponent(websiteService, route) {
+        this.websiteService = websiteService;
+        this.route = route;
     }
     WebsiteListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.userId = params['uid'];
+        });
+    };
+    WebsiteListComponent.prototype.fetchWebsites = function () {
+        var websites = this.websiteService.findWebsitesByUser(this.userId);
+        return websites;
     };
     return WebsiteListComponent;
 }());
@@ -723,10 +757,97 @@ WebsiteListComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/website/website-list/website-list.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/website/website-list/website-list.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
 ], WebsiteListComponent);
 
+var _a, _b;
 //# sourceMappingURL=website-list.component.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/website/website-new/website-new.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/website/website-new/website-new.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navbar navbar-default navbar-fixed-top\">\n  <div class=\"container-fluid\">\n    <div class=\"row\">\n\n      <div class=\"col-sm-4\">\n        <div class=\"navbar-text pull-left\">\n          <a [routerLink]=\"['/user', userId, 'website']\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\n          </a>\n        </div>\n\n        <div class=\" navbar-header hidden-xs\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">Websites</b>\n          </a>\n        </div>\n\n        <div class=\"navbar-text pull-right hidden-xs\">\n          <a class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-plus colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n\n      <div class=\"col-sm-8\">\n        <div class=\" navbar-header pull-left\">\n          <a class=\"navbar-brand\">\n            <b class=\"colorWhite\">New Website</b>\n          </a>\n        </div>\n\n        <div class=\"navbar-text pull-right\">\n          <a (click)=\"addWebsite(name, description)\"\n             class=\"navbar-link\">\n            <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\n          </a>\n        </div>\n      </div>\n\n    </div>\n  </div>\n</nav>\n\n<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <div class=\"col-sm-4 hidden-xs\">\n      <ul class=\"list-group\">\n        <div *ngFor=\"let website of fetchWebsites()\">\n        <li class=\"list-group-item\">\n          <a href=\"#\">{{website.name}}</a>\n          <a [routerLink]=\"['/user', userId, 'website', website._id]\"\n             class=\"pull-right\">\n            <span class=\"glyphicon-cog glyphicon\"></span>\n          </a>\n        </li>\n        </div>\n      </ul>\n    </div>\n\n    <div class=\"col-sm-8\">\n      <label>Name</label>\n      <input [(ngModel)]=\"name\"\n             placeholder=\"Name\"\n             type=\"text\"\n             id=\"websitename\"\n             class=\"form-control\"/>\n      <label>Description</label>\n      <textarea [(ngModel)]=\"description\"\n                placeholder=\"Description for your website\"\n                rows=\"5\"\n                id=\"websitedescription\"\n                class=\"form-control\"></textarea>\n    </div>\n\n  </div>\n</div>\n\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\n  <div class=\"container-fluid\">\n\n    <div class=\"navbar-text pull-right\">\n      <a href=\"../user/profile.html\" class=\"navbar-link\">\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\n      </a>\n    </div>\n\n  </div>\n</nav>\n"
+
+/***/ }),
+
+/***/ "../../../../../src/app/components/website/website-new/website-new.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsiteNewComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__ = __webpack_require__("../../../../../src/app/services/website.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_website_model_client__ = __webpack_require__("../../../../../src/app/models/website.model.client.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var WebsiteNewComponent = (function () {
+    function WebsiteNewComponent(websiteService, route, router) {
+        this.websiteService = websiteService;
+        this.route = route;
+        this.router = router;
+    }
+    WebsiteNewComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params.subscribe(function (params) {
+            _this.userId = params['uid'];
+        });
+    };
+    WebsiteNewComponent.prototype.fetchWebsites = function () {
+        var websites = this.websiteService.findWebsitesByUser(this.userId);
+        return websites;
+    };
+    WebsiteNewComponent.prototype.addWebsite = function (name, description) {
+        var website = new __WEBPACK_IMPORTED_MODULE_3__models_website_model_client__["a" /* Website */]('', name, this.userId, description);
+        website = this.websiteService.createWebsite(this.userId, website);
+        if (website) {
+            this.router.navigate(['/user', this.userId, 'website']);
+        }
+    };
+    return WebsiteNewComponent;
+}());
+WebsiteNewComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["o" /* Component */])({
+        selector: 'app-website-new',
+        template: __webpack_require__("../../../../../src/app/components/website/website-new/website-new.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/components/website/website-new/website-new.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_website_service_client__["a" /* WebsiteService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _c || Object])
+], WebsiteNewComponent);
+
+var _a, _b, _c;
+//# sourceMappingURL=website-new.component.js.map
 
 /***/ }),
 

@@ -4,7 +4,7 @@
 
       <div class="col-sm-4">
         <div class="navbar-text pull-left">
-          <a href="website-list.html"
+          <a [routerLink]="['/user', userId, 'website']"
              class="navbar-link">
             <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
           </a>
@@ -17,7 +17,8 @@
         </div>
 
         <div class="navbar-text pull-right hidden-xs">
-          <a href="website-new.html" class="navbar-link">
+          <a [routerLink]="['/user', userId, 'website','new']"
+             class="navbar-link">
             <span class="glyphicon glyphicon-plus colorWhite"></span>
           </a>
         </div>
@@ -29,7 +30,7 @@
         </div>
 
         <div class="navbar-text pull-right">
-          <a href="website-list.html"
+          <a (click)="updateWebsite(name, description)"
              class="navbar-link">
             <span class="glyphicon glyphicon-ok colorWhite"></span>
           </a>
@@ -71,7 +72,7 @@
                 rows="5"
                 id="websitedescription"
                 class="form-control">Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries. It was develloped by Pyra Labs, which was bought by Google in 2003.</textarea>
-      <a href="website-list.html"
+      <a (click)="deleteWebsite()"
          class="btn btn-danger btn-block">
         Delete
       </a>

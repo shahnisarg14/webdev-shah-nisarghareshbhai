@@ -15,6 +15,7 @@ import { UserService } from './services/user.service.client';
 import { WebsiteListComponent } from './components/website/website-list/website-list.component';
 import { WebsiteService } from './services/website.service.client';
 import { WebsiteEditComponent } from './components/website/website-edit/website-edit.component';
+import { WebsiteNewComponent } from './components/website/website-new/website-new.component';
 
 @NgModule({
   // Declare components here
@@ -26,7 +27,8 @@ import { WebsiteEditComponent } from './components/website/website-edit/website-
     ProfileComponent,
     RegisterComponent,
     WebsiteEditComponent,
-    WebsiteListComponent
+    WebsiteListComponent,
+    WebsiteNewComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="website-new.html"
+      <a [routerLink]="['/user', userId, 'website', 'new']"
          class="navbar-link">
         <span class="glyphicon glyphicon-plus colorWhite"></span>
       </a>
@@ -24,38 +24,15 @@
 
 <div class="container-fluid">
   <ul class="list-group">
-
+    <div *ngFor="let website of fetchWebsites()">
     <li class="list-group-item">
-      <a href="../page/page-list.html">Address Book App</a>
-      <a href="website-edit.html"
+      <a href="#">{{website.name}}</a>
+      <a [routerLink]="['/user', userId, 'website', website._id]"
          class="pull-right">
         <span class="glyphicon-cog glyphicon"></span>
       </a>
     </li>
-
-    <li class="list-group-item">
-      <a href="../page/page-list.html">Blogger</a>
-      <a href="website-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
-    <li class="list-group-item">
-      <a href="../page/page-list.html">Blogging App</a>
-      <a href="website-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
-
-    <li class="list-group-item">
-      <a href="../page/page-list.html">Script Testing App</a>
-      <a href="website-edit.html"
-         class="pull-right">
-        <span class="glyphicon-cog glyphicon"></span>
-      </a>
-    </li>
+    </div>
 
   </ul>
 </div>
@@ -64,7 +41,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>
