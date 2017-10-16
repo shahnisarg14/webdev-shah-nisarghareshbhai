@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WebsiteService} from '../../../services/website.service.client';
 import {Website} from '../../../models/website.model.client';
@@ -18,11 +18,15 @@ export class WidgetListComponent implements OnInit {
   pageId: string;
   website: Website;
   page: Page;
+  text: string;
+  widget: Widget;
+
   constructor(private websiteService: WebsiteService,
               private widgetService: WidgetService,
               private route: ActivatedRoute,
               private pageService: PageService,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -30,13 +34,15 @@ export class WidgetListComponent implements OnInit {
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
     });
-  }
-  fetchWidgets() {
     this.website = this.websiteService.findWebsiteById(this.websiteId);
     this.page = this.pageService.findPageById(this.pageId);
+  }
+
+  fetchWidgets() {
     const widgets: Widget[] = this.widgetService.findWidgetsByPageId(this.pageId);
     return widgets;
   }
+
   updateWidget(_id) {
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', _id]);
   }

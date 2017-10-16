@@ -24,65 +24,63 @@
 
 <div class="container-fluid">
 
-    <div class="form-group">
-      <label for="name">
-        Name
-      </label>
-      <input value="Lorem pixel"
-             placeholder="Name of image"
-             type="text"
-             id="name"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="name">
+      Name
+    </label>
+    <input value="Lorem pixel"
+           placeholder="Name of image"
+           type="text"
+           id="name"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="text">
-        Text
-      </label>
-      <input [(ngModel)]="text"
-             value="You can find images on Lorem pixel"
-             placeholder="Text for image"
-             type="text"
-             id="text"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="text">
+      Text
+    </label>
+    <input [(ngModel)]="text"
+           value="You can find images on Lorem pixel"
+           placeholder="Text for image"
+           type="text"
+           id="text"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="url">
-        URL
-      </label>
-      <input [(ngModel)]="url"
-        value="http://lorempixel.com/"
-             placeholder="http://lorempixel.com/"
-             type="url"
-             id="url"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="url">
+      URL
+    </label>
+    <input [(ngModel)]="url"
+           value="http://lorempixel.com/"
+           placeholder="http://lorempixel.com/"
+           type="url"
+           id="url"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="width">
-        Width
-      </label>
-      <input [(ngModel)]="width"
-             value="100%"
-             placeholder="100%"
-             type="text"
-             id="width"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="width">
+      Width
+    </label>
+    <input [(ngModel)]="width"
+           value="100%"
+           placeholder="100%"
+           type="text"
+           id="width"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="upload">
-        Upload
-      </label>
-      <!-- Ideally the following input tag should not have value.
-           As the user is editing, it is expected that we receive a new file location. -->
-      <input value="No file chosen"
-             placeholder="No file chosen"
-             type="file"
-             id="upload"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="upload">
+      Upload
+    </label>
+    <input value="No file chosen"
+           placeholder="No file chosen"
+           type="file"
+           id="upload"
+           class="form-control"/>
+  </div>
 
   <a class="btn btn-primary btn-block">
     Upload Image

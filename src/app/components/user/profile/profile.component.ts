@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service.client';
-import { User } from '../../../models/user.model.client';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Router} from '@angular/router';
+import {UserService} from '../../../services/user.service.client';
+import {User} from '../../../models/user.model.client';
 import {first} from 'rxjs/operator/first';
 
 @Component({
@@ -18,13 +18,12 @@ export class ProfileComponent implements OnInit {
   lastName: string;
   user: User;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  }
 
   ngOnInit() {
     this.getUser();
   }
-
-
   getUser() {
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
@@ -33,14 +32,12 @@ export class ProfileComponent implements OnInit {
       this.firstName = user.firstName;
       this.lastName = user.lastName;
       this.password = user.password;
-      /*this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.username = user.username;*/
     });
   }
+
   update_user(userName, firstName, lastName) {
     const user = new User(this.userId, userName, this.password, firstName, lastName);
-      if (this.userService.updateUser(this.userId, user)) {
-      }
+    if (this.userService.updateUser(this.userId, user)) {
+    }
   }
 }

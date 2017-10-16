@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service.client';
-import { User } from '../../../models/user.model.client';
+import {Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {UserService} from '../../../services/user.service.client';
+import {User} from '../../../models/user.model.client';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +28,8 @@ export class LoginComponent implements OnInit {
     this.user = this.userService.findUserByCredentials(username, password);
     if (this.user) {
       this.router.navigate(['user/', this.user._id]);
+    } else {
+      this.errorFlag = true;
     }
   }
 

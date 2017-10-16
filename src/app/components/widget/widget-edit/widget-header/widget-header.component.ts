@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WidgetService} from '../../../../services/widget.service.client';
 import {Widget} from '../../../../models/widget.model.client';
@@ -9,16 +9,18 @@ import {Widget} from '../../../../models/widget.model.client';
   styleUrls: ['./widget-header.component.css']
 })
 export class WidgetHeaderComponent implements OnInit {
-pageId: string;
-widgetId: string;
-userId: string;
-websiteId: string;
-size: number;
-text: string;
-widget: Widget;
+  pageId: string;
+  widgetId: string;
+  userId: string;
+  websiteId: string;
+  size: number;
+  text: string;
+  widget: Widget;
+
   constructor(private widgetService: WidgetService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -31,11 +33,13 @@ widget: Widget;
       this.text = this.widget.text;
     });
   }
+
   updateHeader(text, size) {
     this.widgetService.updateWidget(this.widgetId,
       new Widget(this.widgetId, 'HEADING', this.pageId, size, '', text, null));
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
   }
+
   deleteHeader(_id) {
     this.widgetService.deleteWidget(_id);
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);

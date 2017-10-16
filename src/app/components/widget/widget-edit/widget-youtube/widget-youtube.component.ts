@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {WidgetService} from "../../../../services/widget.service.client";
 import {Widget} from "../../../../models/widget.model.client";
@@ -9,19 +9,21 @@ import {Widget} from "../../../../models/widget.model.client";
   styleUrls: ['./widget-youtube.component.css']
 })
 export class WidgetYoutubeComponent implements OnInit {
-userId: string;
-websiteId: string;
-pageId: string;
-widgetId: string;
-widgetType: string;
-size: number;
-widget: Widget;
-url: string;
-width: string;
-text: string;
+  userId: string;
+  websiteId: string;
+  pageId: string;
+  widgetId: string;
+  widgetType: string;
+  size: number;
+  widget: Widget;
+  url: string;
+  width: string;
+  text: string;
+
   constructor(private widgetService: WidgetService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -36,11 +38,13 @@ text: string;
       this.text = this.widget.text;
     });
   }
-updateYoutube(text, url, width) {
+
+  updateYoutube(text, url, width) {
     this.widgetService.updateWidget(this.widgetId,
       new Widget(this.widgetId, 'YOUTUBE', this.pageId, '', this.widgetId, text, url));
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-}
+  }
+
   deleteYoutube(_id) {
     this.widgetService.deleteWidget(_id);
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);

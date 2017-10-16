@@ -1,4 +1,8 @@
 <div class="container-fluid">
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
   <h1>Register</h1>
   <input [(ngModel)]="username"
          placeholder="Username"

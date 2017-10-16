@@ -17,48 +17,48 @@
 </nav>
 
 <div class="container-fluid">
-    <div class="form-group">
-      <label for="username">
-        Username
-      </label>
-      <input [(ngModel)] = "username"
-             placeholder="username"
-             type="text"
-             id="username"
-             class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="email">
-        Email
-      </label>
-      <input value="shah.nisar@husky.neu.edu"
-             placeholder="email id"
-             type="email"
-             id="email"
-             class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="firstname">
-        First Name
-      </label>
-      <input [(ngModel)] = "firstName"
-             placeholder="first name"
-             type="text"
-             id="firstname"
-             class="form-control"/>
-    </div>
-    <div class="form-group">
-      <label for="lastname">
-        Last Name
-      </label>
-      <input [(ngModel)]="lastName"
-             placeholder="last name"
-             type="text"
-             id="lastname"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="username">
+      Username
+    </label>
+    <input [(ngModel)]="username"
+           placeholder="username"
+           type="text"
+           id="username"
+           class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="email">
+      Email
+    </label>
+    <input value="shah.nisar@husky.neu.edu"
+           placeholder="email id"
+           type="email"
+           id="email"
+           class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="firstname">
+      First Name
+    </label>
+    <input [(ngModel)]="firstName"
+           placeholder="first name"
+           type="text"
+           id="firstname"
+           class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label for="lastname">
+      Last Name
+    </label>
+    <input [(ngModel)]="lastName"
+           placeholder="last name"
+           type="text"
+           id="lastname"
+           class="form-control"/>
+  </div>
   <a class="btn btn-primary btn-block"
-  [routerLink]="['/user', userId, 'website']">
+     [routerLink]="['/user', userId, 'website']">
     Websites
   </a>
   <a class="btn btn-danger btn-block"
@@ -71,7 +71,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="profile.html" class="navbar-link">
+      <a class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>
     </div>

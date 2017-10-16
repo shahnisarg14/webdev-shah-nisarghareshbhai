@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Page } from '../../../models/page.model.client';
-import { PageService } from '../../../services/page.service.client';
+import {Component, OnInit} from '@angular/core';
+import {Page} from '../../../models/page.model.client';
+import {PageService} from '../../../services/page.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -13,9 +13,11 @@ export class PageNewComponent implements OnInit {
   name: string;
   description: string;
   websiteId: string;
+
   constructor(private pageService: PageService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -23,10 +25,12 @@ export class PageNewComponent implements OnInit {
       this.websiteId = params['wid'];
     });
   }
+
   fetchPages() {
     const pages: Page[] = this.pageService.findPagesByWebsiteId(this.websiteId);
     return pages;
   }
+
   addPage(name, description) {
     let page = new Page('', name, this.websiteId, description);
     page = this.pageService.createPage(this.websiteId, page);

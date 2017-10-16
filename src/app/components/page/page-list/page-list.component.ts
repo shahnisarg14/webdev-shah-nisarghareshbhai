@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { PageService } from '../../../services/page.service.client';
-import { Page } from '../../../models/page.model.client';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {PageService} from '../../../services/page.service.client';
+import {Page} from '../../../models/page.model.client';
 import {Website} from '../../../models/website.model.client';
 
 @Component({
@@ -14,8 +14,10 @@ export class PageListComponent implements OnInit {
   page: Page;
   userId: string;
   pageId: string;
+
   constructor(private pageService: PageService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -25,6 +27,7 @@ export class PageListComponent implements OnInit {
       this.page = this.pageService.findPageById(this.pageId);
     });
   }
+
   fetchPages() {
     const pages: Page[] = this.pageService.findPagesByWebsiteId(this.websiteId);
     return pages;

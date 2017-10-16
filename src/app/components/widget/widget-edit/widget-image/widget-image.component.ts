@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {WidgetService} from '../../../../services/widget.service.client';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Widget} from '../../../../models/widget.model.client';
@@ -19,9 +19,11 @@ export class WidgetImageComponent implements OnInit {
   text: string;
   url: string;
   width: string;
+
   constructor(private widgetService: WidgetService,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -36,6 +38,7 @@ export class WidgetImageComponent implements OnInit {
       this.width = this.widget.width;
     });
   }
+
   updateImage(text, width, url) {
     this.widgetService.updateWidget(this.widgetId,
       new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url));

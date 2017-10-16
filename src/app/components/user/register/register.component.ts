@@ -14,7 +14,8 @@ export class RegisterComponent implements OnInit {
   verifyPassword: string;
   password: string;
   username: string;
-
+  errorMsg = 'Passwords do not match!';
+  errorFlag: boolean;
   constructor(private userService: UserService,
               private router: Router) {
   }
@@ -29,6 +30,8 @@ export class RegisterComponent implements OnInit {
       if (this.userService.findUserById(this.user._id)) {
         this.router.navigate(['/login']);
       }
+    } else {
+      this.errorFlag = true;
     }
   }
 
