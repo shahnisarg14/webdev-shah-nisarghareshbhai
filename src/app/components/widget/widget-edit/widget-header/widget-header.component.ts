@@ -26,14 +26,19 @@ widget: Widget;
       this.widgetId = params['wgid'];
       this.userId = params['uid'];
       this.websiteId = params['wid'];
+      this.widget = this.widgetService.findWidgetById(this.widgetId);
+      this.size = this.widget.size;
+      this.text = this.widget.text;
     });
-    this.widget = this.widgetService.findWidgetById(this.widgetId);
-    this.size = this.widget.size;
-    this.text = this.widget.text;
   }
   updateHeader(text, size) {
     this.widgetService.updateWidget(this.widgetId,
       new Widget(this.widgetId, 'HEADING', this.pageId, size, '', text, null));
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+  }
+  deleteHeader(_id) {
+    this.widgetService.deleteWidget(_id);
+    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+
   }
 }

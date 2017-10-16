@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="widget-list.html"
+      <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="widget-list.html"
+      <a (click)="updateYoutube(text, url, width)"
          class="navbar-link">
         <span class="glyphicon glyphicon-ok colorWhite"></span>
       </a>
@@ -24,53 +24,54 @@
 
 <div class="container-fluid">
 
-  <form>
-    <div class="form-group">
-      <label for="name">
-        Name
-      </label>
-      <input value="Columbia"
-             placeholder="Name of video"
-             type="text"
-             id="name"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="name">
+      Name
+    </label>
+    <input value="Columbia"
+           placeholder="Name of video"
+           type="text"
+           id="name"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="text">
-        Text
-      </label>
-      <input value="Documentary on Columbia Space Shuttle Disaster"
-             placeholder="Description of video"
-             type="text"
-             id="text"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="text">
+      Text
+    </label>
+    <input [(ngModel)]="text"
+           value="Documentary on Columbia Space Shuttle Disaster"
+           placeholder="Description of video"
+           type="text"
+           id="text"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="url">
-        URL
-      </label>
-      <input value="https://www.youtube.com/watch?v=gWhqLVkjK50"
-             placeholder="https://www.youtube.com/watch?v=gWhqLVkjK50"
-             type="url"
-             id="url"
-             class="form-control"/>
-    </div>
+  <div class="form-group">
+    <label for="url">
+      URL
+    </label>
+    <input [(ngModel)]="url"
+           value="https://www.youtube.com/watch?v=gWhqLVkjK50"
+           placeholder="https://www.youtube.com/watch?v=gWhqLVkjK50"
+           type="url"
+           id="url"
+           class="form-control"/>
+  </div>
 
-    <div class="form-group">
-      <label for="width">
-        Width
-      </label>
-      <input value="100%"
-             placeholder="100%"
-             type="text"
-             id="width"
-             class="form-control"/>
-    </div>
-  </form>
+  <div class="form-group">
+    <label for="width">
+      Width
+    </label>
+    <input [(ngModel)]="width"
+           value="100%"
+           placeholder="100%"
+           type="text"
+           id="width"
+           class="form-control"/>
+  </div>
 
-  <a href="widget-list.html"
+  <a (click)="deleteYoutube(widgetId)"
      class="btn btn-danger btn-block">
     Delete
   </a>
@@ -81,7 +82,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>

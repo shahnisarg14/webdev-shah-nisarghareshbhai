@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="widget-list.html"
+      <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="widget-list.html"
+      <a (click)="updateImage(text, width, url)"
          class="navbar-link">
         <span class="glyphicon glyphicon-ok colorWhite"></span>
       </a>
@@ -24,7 +24,6 @@
 
 <div class="container-fluid">
 
-  <form>
     <div class="form-group">
       <label for="name">
         Name
@@ -40,7 +39,8 @@
       <label for="text">
         Text
       </label>
-      <input value="You can find images on Lorem pixel"
+      <input [(ngModel)]="text"
+             value="You can find images on Lorem pixel"
              placeholder="Text for image"
              type="text"
              id="text"
@@ -51,7 +51,8 @@
       <label for="url">
         URL
       </label>
-      <input value="http://lorempixel.com/"
+      <input [(ngModel)]="url"
+        value="http://lorempixel.com/"
              placeholder="http://lorempixel.com/"
              type="url"
              id="url"
@@ -62,7 +63,8 @@
       <label for="width">
         Width
       </label>
-      <input value="100%"
+      <input [(ngModel)]="width"
+             value="100%"
              placeholder="100%"
              type="text"
              id="width"
@@ -81,13 +83,11 @@
              id="upload"
              class="form-control"/>
     </div>
-  </form>
 
-  <a href="#"
-     class="btn btn-primary btn-block">
+  <a class="btn btn-primary btn-block">
     Upload Image
   </a>
-  <a href="widget-list.html"
+  <a (click)="deleteImage(widgetId)"
      class="btn btn-danger btn-block">
     Delete
   </a>
@@ -97,7 +97,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>
