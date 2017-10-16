@@ -20,6 +20,14 @@ import {PageListComponent} from './components/page/page-list/page-list.component
 import {PageService} from './services/page.service.client';
 import {PageNewComponent} from './components/page/page-new/page-new.component';
 import {PageEditComponent} from './components/page/page-edit/page-edit.component';
+import {WidgetListComponent} from './components/widget/widget-list/widget-list.component';
+import {WidgetChooserComponent} from './components/widget/widget-chooser/widget-chooser.component';
+import {WidgetEditComponent} from './components/widget/widget-edit/widget-edit.component';
+import {WidgetService} from './services/widget.service.client';
+import {SafePipe} from './components/widget/safePipe';
+import {WidgetHeaderComponent} from './components/widget/widget-edit/widget-header/widget-header.component';
+import {WidgetImageComponent} from './components/widget/widget-edit/widget-image/widget-image.component';
+import {WidgetYoutubeComponent} from './components/widget/widget-edit/widget-youtube/widget-youtube.component';
 
 @NgModule({
   // Declare components here
@@ -35,7 +43,14 @@ import {PageEditComponent} from './components/page/page-edit/page-edit.component
     WebsiteNewComponent,
     PageListComponent,
     PageNewComponent,
-    PageEditComponent
+    PageEditComponent,
+    WidgetListComponent,
+    WidgetChooserComponent,
+    WidgetEditComponent,
+    SafePipe,
+    WidgetHeaderComponent,
+    WidgetImageComponent,
+    WidgetYoutubeComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +59,7 @@ import {PageEditComponent} from './components/page/page-edit/page-edit.component
     Routing
   ],
   // Client Side services here
-  providers: [TestService, UserService, WebsiteService, PageService],
+  providers: [TestService, UserService, WebsiteService, PageService, WidgetService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

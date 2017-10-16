@@ -24,7 +24,7 @@ export class PageNewComponent implements OnInit {
     });
   }
   fetchPages() {
-    const pages: Page[] = this.pageService.findPagesByWebsiteId(this.userId);
+    const pages: Page[] = this.pageService.findPagesByWebsiteId(this.websiteId);
     return pages;
   }
   addPage(name, description) {

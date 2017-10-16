@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="../page/page-list.html"
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="widget-chooser.html"
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new']"
          class="navbar-link">
         <span class="glyphicon glyphicon-plus colorWhite"></span>
       </a>
@@ -23,82 +23,87 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="nhs-widget">
-    <div class="nhs-toolbar">
-      <a href="widget-heading.html">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
-    </div>
-    <h1>GIZMODO</h1>
-  </div>
+  <div *ngFor="let widget of fetchWidgets()">
+    <div [ngSwitch]="widget.widgetType">
+      <div *ngSwitchCase="'HEADING'">
 
-  <div class="nhs-widget">
-    <div class="nhs-toolbar">
-      <a href="widget-heading.html">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
-    </div>
-    <h2>Signal is Using a Surprising Tool to Make Your Privacy More Bulletproof</h2>
-  </div>
+        <div class="nhs-widget">
+          <div class="nhs-toolbar">
+            <a (click)="updateWidget(widget._id)">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+          </div>
+          <div [ngSwitch]="widget.size">
+            <div *ngSwitchCase="1">
+              <h1>{{widget.text}}</h1>
+            </div>
+            <div *ngSwitchCase="2">
+              <h2>{{widget.text}}</h2>
+            </div>
+            <div *ngSwitchCase="3">
+              <h3>{{widget.text}}</h3>
+            </div>
+            <div *ngSwitchCase="4">
+              <h4>{{widget.text}}</h4>
+            </div>
+            <div *ngSwitchCase="5">
+              <h5>{{widget.text}}</h5>
+            </div>
+            <div *ngSwitchCase="6">
+              <h6>{{widget.text}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <div class="nhs-widget">
-    <div class="nhs-transparent-toolbar">
-      <a href="widget-image.html">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
-    </div>
-    <img class="nhs-image"
-         src="http://lorempixel.com/400/200"/>
-  </div>
+      <div *ngSwitchCase="'IMAGE'">
+        <div class="nhs-widget">
+          <div class="nhs-transparent-toolbar">
+            <a (click)="updateWidget(widget._id)">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+          </div>
+          <img class="nhs-image"
+               src="{{widget.url}}"/>
+        </div>
+      </div>
 
-  <div class="nhs-widget">
-    <div class="nhs-toolbar">
-      <a href="#">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
-    </div>
-    <p>If you want total privacy, Signal is the generally understood to be the
-      <a href="https://lifehacker.com/secure-messaging-app-showdown-whatsapp-vs-signal-1794684943"
-         target="_blank"
-         rel="noopener">best messaging</a> app around. But that doesn't mean it offers total privacy.</p>
-  </div>
+      <div *ngSwitchCase="'HTML'">
+        <div class="nhs-widget">
+          <div class="nhs-toolbar">
+            <a (click)="updateWidget(widget._id)">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+          </div>
+          {{widget.text}}
+        </div>
+      </div>
 
-  <div class="nhs-widget">
-    <div class="nhs-toolbar">
-      <a href="widget-heading.html">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
+      <div *ngSwitchCase="'YOUTUBE'">
+        <div class="nhs-widget">
+          <div class="nhs-transparent-toolbar">
+            <a (click)="updateWidget(widget._id)">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+          </div>
+          <iframe class="nhs-frame"
+                  [src]="widget.url | safe">
+          </iframe>
+        </div>
+      </div>
     </div>
-    <h3>Space Shuttle Columbia</h3>
-  </div>
-
-  <div class="nhs-widget">
-    <div class="nhs-transparent-toolbar">
-      <a href="widget-youtube.html">
-        <span class="glyphicon glyphicon-cog"></span>
-      </a>
-      <a href="#">
-        <span class="glyphicon glyphicon-menu-hamburger"></span>
-      </a>
-    </div>
-    <iframe class="nhs-frame"
-            src="https://www.youtube.com/embed/gWhqLVkjK50">
-    </iframe>
   </div>
 
 </div>
@@ -107,21 +112,19 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="#"
-         class="navbar-link">
+      <a class="navbar-link">
         <span class="glyphicon glyphicon-play colorWhite"></span>
       </a>
     </div>
 
     <div class="navbar-text pull-left">
-      <a href="#"
-         class="navbar-link">
+      <a class="navbar-link">
         <span class="glyphicon glyphicon-eye-open colorWhite"></span>
       </a>
     </div>
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>

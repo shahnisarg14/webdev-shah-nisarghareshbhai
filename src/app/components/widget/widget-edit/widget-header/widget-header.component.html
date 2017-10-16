@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a href="widget-list.html"
+      <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -13,7 +13,7 @@
     </a>
 
     <div class="navbar-text pull-right">
-      <a href="widget-list.html"
+      <a (click)="updateHeader(text, size)"
          class="navbar-link">
         <span class="glyphicon glyphicon-ok colorWhite"></span>
       </a>
@@ -24,7 +24,6 @@
 
 <div class="container-fluid">
 
-  <form>
     <div class="form-group">
       <label for="name">
         Name
@@ -40,7 +39,8 @@
       <label for="text">
         Text
       </label>
-      <input value="GIZMODO"
+      <input [(ngModel)]="text"
+             value="GIZMODO"
              placeholder="widget text"
              type="text"
              id="text"
@@ -51,13 +51,13 @@
       <label>
         Size
       </label>
-      <input value="3"
+      <input [(ngModel)]="size"
+             value="3"
              placeholder="3"
              type="number"
              id="size"
              class="form-control"/>
     </div>
-  </form>
 
   <a href="widget-list.html"
      class="btn btn-danger btn-block">
@@ -70,7 +70,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-right">
-      <a href="../user/profile.html"
+      <a [routerLink]="['/user', userId]"
          class="navbar-link">
         <span class="glyphicon glyphicon-user colorWhite"></span>
       </a>

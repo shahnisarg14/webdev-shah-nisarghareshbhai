@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {WidgetService} from '../../../services/widget.service.client';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Widget} from '../../../models/widget.model.client';
 
 @Component({
   selector: 'app-widget-chooser',
@@ -6,10 +9,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./widget-chooser.component.css']
 })
 export class WidgetChooserComponent implements OnInit {
+  userId: string;
+  websiteId: string;
+  pageId: string;
+  widget: Widget;
 
-  constructor() { }
+  constructor(private widgetService: WidgetService,
+              private route: ActivatedRoute,
+              private router: Router) {
+  }
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.userId = params['uid'];
+      this.websiteId = params['wid'];
+      this.pageId = params['pid'];
+    });
+  }
+
+  createWidget(type) {
+    this.widget = this.widgetService.createWidget(this.pageId,
+      new Widget('', type, this.pageId, null, null, null, null));
+    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.widget._id]);
   }
 
 }
