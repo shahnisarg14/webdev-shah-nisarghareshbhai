@@ -12,6 +12,8 @@ export class WebsiteNewComponent implements OnInit {
   userId: string;
   name: string;
   description: string;
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
 
   constructor(private websiteService: WebsiteService,
               private route: ActivatedRoute,
@@ -30,6 +32,10 @@ export class WebsiteNewComponent implements OnInit {
   }
 
   addWebsite(name, description) {
+    if ((name === undefined) || (name === '')) {
+      this.errorFlag = true;
+      return;
+    }
     let website = new Website('', name, this.userId, description);
     website = this.websiteService.createWebsite(this.userId, website);
     if (website) {

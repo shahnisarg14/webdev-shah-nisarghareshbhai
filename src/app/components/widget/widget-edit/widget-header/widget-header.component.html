@@ -2,7 +2,7 @@
   <div class="container-fluid">
 
     <div class="navbar-text pull-left">
-      <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+      <a [routerLink]="['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
          class="navbar-link">
         <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
       </a>
@@ -51,12 +51,19 @@
     <label>
       Size
     </label>
-    <input [(ngModel)]="size"
+    <input min="1"
+           max="6"
+           [(ngModel)]="size"
            value="3"
            placeholder="3"
            type="number"
            id="size"
            class="form-control"/>
+  </div>
+
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
   </div>
 
   <a (click)="deleteHeader(widgetId)"

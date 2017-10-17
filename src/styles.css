@@ -68,3 +68,7 @@ body{
   border-bottom-left-radius: 10px;
   opacity: 0.5;
 }
+
+input:invalid{
+  border-color: red;
+}

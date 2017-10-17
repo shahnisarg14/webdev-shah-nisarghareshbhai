@@ -72,6 +72,10 @@
              type="text"
              id="pagetitle"
              class="form-control"/>
+      <div *ngIf="errorFlag"
+           class="alert alert-danger">
+        {{errorMsg}}
+      </div>
     </div>
 
   </div>

@@ -72,8 +72,11 @@
                 rows="5"
                 id="websitedescription"
                 class="form-control"></textarea>
+      <div *ngIf="errorFlag"
+           class="alert alert-danger">
+        {{errorMsg}}
+      </div>
     </div>
-
   </div>
 </div>
 

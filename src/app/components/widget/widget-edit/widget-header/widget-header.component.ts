@@ -16,6 +16,8 @@ export class WidgetHeaderComponent implements OnInit {
   size: number;
   text: string;
   widget: Widget;
+  errorFlag: boolean;
+  errorMsg = '';
 
   constructor(private widgetService: WidgetService,
               private router: Router,
@@ -35,6 +37,16 @@ export class WidgetHeaderComponent implements OnInit {
   }
 
   updateHeader(text, size) {
+    if (((size < 1) || (size > 6))) {
+      this.errorMsg = 'Size should be in between 1 to 6!';
+      this.errorFlag = true;
+      return;
+    }
+    if ((text === undefined) || (text === null)) {
+      this.errorMsg = 'Text field should not be empty!';
+      this.errorFlag = true;
+      return;
+    }
     this.widgetService.updateWidget(this.widgetId,
       new Widget(this.widgetId, 'HEADING', this.pageId, size, '', text, null));
     this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);

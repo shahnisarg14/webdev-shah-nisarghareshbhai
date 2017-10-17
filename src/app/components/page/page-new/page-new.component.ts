@@ -13,6 +13,8 @@ export class PageNewComponent implements OnInit {
   name: string;
   description: string;
   websiteId: string;
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
 
   constructor(private pageService: PageService,
               private route: ActivatedRoute,
@@ -32,6 +34,10 @@ export class PageNewComponent implements OnInit {
   }
 
   addPage(name, description) {
+    if ((name === undefined) || (name === '')) {
+      this.errorFlag = true;
+      return;
+    }
     let page = new Page('', name, this.websiteId, description);
     page = this.pageService.createPage(this.websiteId, page);
     if (page) {
