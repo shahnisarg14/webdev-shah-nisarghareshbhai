@@ -20,11 +20,12 @@
          id="verifypassword"
          class="form-control"/>
   <button class="btn btn-primary btn-block"
+          [disabled]="!(username && password && verifyPassword)"
           (click)="register(username, password, verifyPassword)">
     Register
   </button>
-  <a class="btn btn-danger btn-block"
-     [routerLink]="['/login']">
+  <button class="btn btn-danger btn-block"
+          [routerLink]="['/login']">
     Cancel
-  </a>
+  </button>
 </div>

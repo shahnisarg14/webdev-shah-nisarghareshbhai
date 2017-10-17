@@ -15,12 +15,13 @@
          type="password"
          id="password"
          class="form-control"/>
-  <a class="btn btn-primary btn-block"
-     (click)="login(username, password)">
+  <button class="btn btn-primary btn-block"
+          (click)="login(username, password)"
+          [disabled]="!(username && password)">
     Login
-  </a>
-  <a class="btn btn-success btn-block"
-     [routerLink]="['/register']">
+  </button>
+  <button class="btn btn-success btn-block"
+          [routerLink]="['/register']">
     Register
-  </a>
+  </button>
 </div>

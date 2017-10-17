@@ -22,7 +22,7 @@
   </div>
 </nav>
 
-<div class="container-fluid">
+<div class="container-fluid nhs-padding">
   <div *ngFor="let widget of fetchWidgets()">
     <div [ngSwitch]="widget.widgetType">
       <div *ngSwitchCase="'HEADING'">
@@ -36,7 +36,7 @@
               <span class="glyphicon glyphicon-menu-hamburger"></span>
             </a>
           </div>
-          <div [ngSwitch]="widget.size">
+          <div [ngSwitch]="widget.size" class="nhs-heading">
             <div *ngSwitchCase="1">
               <h1>{{widget.text}}</h1>
             </div>
@@ -76,6 +76,7 @@
       </div>
 
       <div *ngSwitchCase="'HTML'">
+        <div class="nhs-html">
         <div class="nhs-widget">
           <div class="nhs-toolbar">
             <a (click)="updateWidget(widget._id)">
@@ -86,6 +87,7 @@
             </a>
           </div>
           {{widget.text}}
+        </div>
         </div>
       </div>
 
