@@ -1,7 +1,8 @@
 var Widget = require("../models/widget.model.server");
 
 module.exports = function(app) {
-
+  var multer = require('multer');
+  var upload = multer({ dest:__dirname + '/../../dist/assets/uploads'});
   var widgets = [
     new Widget("123", "HEADING", "321", 2, "null", "GIZMODO", "null"),
     new Widget("234", "HEADING", "321", 4, "null", "Lorem ipsum", "null"),
@@ -17,7 +18,15 @@ module.exports = function(app) {
   app.get("/api/widget/:wgid", findWidgetById);
   app.put("/api/widget/:wgid", updateWidget);
   app.delete("/api/widget/:wgid", deleteWidget);
+  app.post("/api/upload", upload.single('myFile'), uploadImage);
 
+  function createWidget(req, res) {
+    const widget = req.body;
+    const newWidget = new Widget(widget._id, widget.widgetType, widget.pageId, widget.size, widget.width, widget.text,
+      widget.url);
+    widgets.push(newWidget);
+    res.json(newWidget);
+  }
   function findAllWidgetsForPage(req, res) {
     const pageId = req.params["pid"];
     const list = [];
@@ -28,7 +37,6 @@ module.exports = function(app) {
     }
     res.json(list);
   }
-
   function findWidgetById(req, res) {
     const widgetId = req.params["wgid"];
     const widget = widgets.find(function (widget) {
@@ -57,13 +65,34 @@ module.exports = function(app) {
       }
     }
   }
-  function createWidget(req, res) {
-    console.log("Inside createWidget");
-    const widget = req.body;
-    const newWidget = new Widget(widget._id, widget.widgetType, widget.pageId, widget.size, widget.width, widget.text,
-      widget.url);
-    widgets.push(newWidget);
-    res.json(newWidget);
-  }
+  function uploadImage(req, res) {
+    var widgetId      = req.body.widgetId;
+    var width         = req.body.width;
+    var myFile        = req.file;
 
+    var userId = req.body.userId;
+    var websiteId = req.body.websiteId;
+    var pageId = req.body.pageId;
+
+    var originalname  = myFile.originalname; // file name on user's computer
+    var filename      = myFile.filename;     // new file name in upload folder
+    var path          = myFile.path;         // full path of uploaded file
+    var destination   = myFile.destination;  // folder where file is saved to
+    var size          = myFile.size;
+    var mimetype      = myFile.mimetype;
+
+    widget = getWidgetById(widgetId);
+    widget.url = '/assets/uploads/'+filename;
+
+    var callbackUrl   = "/user/"+userId+"/website/"+websiteId+ '/page/' + pageId + '/widget';
+    res.redirect(callbackUrl);
+
+  }
+  function getWidgetById(widgetId) {
+    for (var x = 0; x < widgets.length; x++) {
+      if (widgets[x]._id === widgetId) {
+        return widgets[x];
+      }
+    }
+  }
 };
