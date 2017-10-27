@@ -20,6 +20,7 @@ export class WidgetListComponent implements OnInit {
   page: Page;
   text: string;
   widget: Widget;
+  widgets: Widget[];
 
   constructor(private websiteService: WebsiteService,
               private widgetService: WidgetService,
@@ -34,16 +35,14 @@ export class WidgetListComponent implements OnInit {
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
     });
-    this.websiteService.findWebsiteById(this.websiteId)
-      .subscribe((website) => {
-        this.website = website;
+    this.widgetService.findWidgetsByPageId(this.pageId)
+      .subscribe((widgets) => {
+        this.widgets = widgets;
       });
-    this.pageService.findPageById(this.pageId);
   }
 
   fetchWidgets() {
-    const widgets: Widget[] = this.widgetService.findWidgetsByPageId(this.pageId);
-    return widgets;
+    return this.widgets;
   }
 
   updateWidget(_id) {

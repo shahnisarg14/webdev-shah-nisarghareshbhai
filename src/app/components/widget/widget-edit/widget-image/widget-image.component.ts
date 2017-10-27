@@ -13,6 +13,7 @@ export class WidgetImageComponent implements OnInit {
   userId: string;
   websiteId: string;
   widgetId: string;
+  widgetType: string;
   name: string;
   size: number;
   widget: Widget;
@@ -31,23 +32,31 @@ export class WidgetImageComponent implements OnInit {
       this.widgetId = params['wgid'];
       this.userId = params['uid'];
       this.websiteId = params['wid'];
-      this.widget = this.widgetService.findWidgetById(this.widgetId);
-      this.size = this.widget.size;
-      this.url = this.widget.url;
-      this.text = this.widget.text;
-      this.width = this.widget.width;
+      this.widgetService.findWidgetById(this.widgetId)
+        .subscribe((widget) => {
+          this.widget = widget;
+          this.widgetType = this.widget.widgetType;
+          this.size = this.widget.size;
+          this.url = this.widget.url;
+          this.text = this.widget.text;
+          this.width = this.widget.width;
+        });
     });
   }
 
   updateImage(text, width, url) {
-    this.widgetService.updateWidget(this.widgetId,
-      new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url));
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-
+    const updatedImage = new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url);
+    this.widgetService.updateWidget(this.widgetId, updatedImage)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 
   deleteImage(_id) {
-    this.widgetService.deleteWidget(_id);
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    this.widgetService.deleteWidget(this.widgetId)
+      .subscribe(() => {
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 }

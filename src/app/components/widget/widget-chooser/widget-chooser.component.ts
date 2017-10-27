@@ -13,6 +13,8 @@ export class WidgetChooserComponent implements OnInit {
   websiteId: string;
   pageId: string;
   widget: Widget;
+  widgetType: string;
+  widgetId: string;
 
   constructor(private widgetService: WidgetService,
               private route: ActivatedRoute,
@@ -28,9 +30,14 @@ export class WidgetChooserComponent implements OnInit {
   }
 
   createWidget(type) {
-    this.widget = this.widgetService.createWidget(this.pageId,
-      new Widget('', type, this.pageId, null, null, null, null));
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.widget._id]);
+    this.widgetType = type;
+    const newWidget = new Widget(null, this.widgetType, this.pageId, null, null, null, null);
+    this.widgetService.createWidget(this.pageId, newWidget)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.widgetId = this.widget._id;
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.widgetId]);
+      });
   }
 
 }

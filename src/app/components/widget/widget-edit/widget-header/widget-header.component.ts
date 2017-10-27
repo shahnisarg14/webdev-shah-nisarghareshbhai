@@ -11,6 +11,7 @@ import {Widget} from '../../../../models/widget.model.client';
 export class WidgetHeaderComponent implements OnInit {
   pageId: string;
   widgetId: string;
+  widgetType: string;
   userId: string;
   websiteId: string;
   size: number;
@@ -30,10 +31,14 @@ export class WidgetHeaderComponent implements OnInit {
       this.widgetId = params['wgid'];
       this.userId = params['uid'];
       this.websiteId = params['wid'];
-      this.widget = this.widgetService.findWidgetById(this.widgetId);
-      this.size = this.widget.size;
-      this.text = this.widget.text;
     });
+    this.widgetService.findWidgetById(this.widgetId)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.widgetType = this.widget.widgetType;
+        this.text = this.widget.text;
+        this.size = this.widget.size;
+      });
   }
 
   updateHeader(text, size) {
@@ -47,14 +52,19 @@ export class WidgetHeaderComponent implements OnInit {
       this.errorFlag = true;
       return;
     }
-    this.widgetService.updateWidget(this.widgetId,
-      new Widget(this.widgetId, 'HEADING', this.pageId, size, '', text, null));
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    const updatedHeader = new Widget(this.widgetId, 'HEADING', this.pageId, size, null, text, null);
+    this.widgetService.updateWidget(this.widgetId, updatedHeader)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+
+      });
   }
 
   deleteHeader(_id) {
-    this.widgetService.deleteWidget(_id);
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
-
+    this.widgetService.deleteWidget(this.widgetId)
+      .subscribe(() => {
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 }

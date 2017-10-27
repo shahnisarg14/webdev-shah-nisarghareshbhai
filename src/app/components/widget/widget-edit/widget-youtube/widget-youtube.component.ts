@@ -31,22 +31,31 @@ export class WidgetYoutubeComponent implements OnInit {
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
       this.widgetId = params['wgid'];
-      this.widget = this.widgetService.findWidgetById(this.widgetId);
-      this.size = this.widget.size;
-      this.url = this.widget.url;
-      this.width = this.widget.width;
-      this.text = this.widget.text;
+      this.widgetService.findWidgetById(this.widgetId)
+        .subscribe((widget) => {
+          this.widget = widget;
+          this.size = this.widget.size;
+          this.url = this.widget.url;
+          this.text = this.widget.text;
+          this.width = this.widget.width;
+        });
     });
   }
 
   updateYoutube(text, url, width) {
-    this.widgetService.updateWidget(this.widgetId,
-      new Widget(this.widgetId, 'YOUTUBE', this.pageId, '', this.widgetId, text, url));
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    const updatedYoutube = new Widget(this.widgetId, 'YOUTUBE', this.pageId, null, width, text, url);
+    this.widgetService.updateWidget(this.widgetId, updatedYoutube)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+
+      });
   }
 
   deleteYoutube(_id) {
-    this.widgetService.deleteWidget(_id);
-    this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+    this.widgetService.deleteWidget(this.widgetId)
+      .subscribe(() => {
+        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 }

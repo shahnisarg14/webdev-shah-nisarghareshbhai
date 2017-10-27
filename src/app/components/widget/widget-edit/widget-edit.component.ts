@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {WidgetService} from "../../../services/widget.service.client";
+import {ActivatedRoute, Router} from '@angular/router';
+import {WidgetService} from '../../../services/widget.service.client';
+import {Widget} from '../../../models/widget.model.client';
 
 @Component({
   selector: 'app-widget-edit',
@@ -13,6 +14,8 @@ export class WidgetEditComponent implements OnInit {
   pageId: string;
   widgetId: string;
   widgetType: string;
+  widget: Widget;
+  widgets: Widget[];
 
   constructor(private widgetService: WidgetService,
               private route: ActivatedRoute,
@@ -26,7 +29,15 @@ export class WidgetEditComponent implements OnInit {
       this.pageId = params['pid'];
       this.widgetId = params['wgid'];
     });
-    this.widgetType = this.widgetService.findWidgetById(this.widgetId).widgetType;
+    this.widgetService.findWidgetById(this.widgetId)
+      .subscribe((widget) => {
+        this.widget = widget;
+        this.widgetType = this.widget.widgetType;
+      });
+    this.widgetService.findWidgetsByPageId(this.pageId)
+      .subscribe((widgets) => {
+        this.widgets = widgets;
+      });
   }
 
 }

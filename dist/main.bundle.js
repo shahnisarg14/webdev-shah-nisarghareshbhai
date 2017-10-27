@@ -1343,8 +1343,15 @@ var WidgetChooserComponent = (function () {
         });
     };
     WidgetChooserComponent.prototype.createWidget = function (type) {
-        this.widget = this.widgetService.createWidget(this.pageId, new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */]('', type, this.pageId, null, null, null, null));
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.widget._id]);
+        var _this = this;
+        this.widgetType = type;
+        var newWidget = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](null, this.widgetType, this.pageId, null, null, null, null);
+        this.widgetService.createWidget(this.pageId, newWidget)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.widgetId = _this.widget._id;
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget', _this.widgetId]);
+        });
     };
     return WidgetChooserComponent;
 }());
@@ -1421,7 +1428,15 @@ var WidgetEditComponent = (function () {
             _this.pageId = params['pid'];
             _this.widgetId = params['wgid'];
         });
-        this.widgetType = this.widgetService.findWidgetById(this.widgetId).widgetType;
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.widgetType = _this.widget.widgetType;
+        });
+        this.widgetService.findWidgetsByPageId(this.pageId)
+            .subscribe(function (widgets) {
+            _this.widgets = widgets;
+        });
     };
     return WidgetEditComponent;
 }());
@@ -1500,12 +1515,17 @@ var WidgetHeaderComponent = (function () {
             _this.widgetId = params['wgid'];
             _this.userId = params['uid'];
             _this.websiteId = params['wid'];
-            _this.widget = _this.widgetService.findWidgetById(_this.widgetId);
-            _this.size = _this.widget.size;
+        });
+        this.widgetService.findWidgetById(this.widgetId)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.widgetType = _this.widget.widgetType;
             _this.text = _this.widget.text;
+            _this.size = _this.widget.size;
         });
     };
     WidgetHeaderComponent.prototype.updateHeader = function (text, size) {
+        var _this = this;
         if (((size < 1) || (size > 6))) {
             this.errorMsg = 'Size should be in between 1 to 6!';
             this.errorFlag = true;
@@ -1516,12 +1536,19 @@ var WidgetHeaderComponent = (function () {
             this.errorFlag = true;
             return;
         }
-        this.widgetService.updateWidget(this.widgetId, new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'HEADING', this.pageId, size, '', text, null));
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var updatedHeader = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'HEADING', this.pageId, size, null, text, null);
+        this.widgetService.updateWidget(this.widgetId, updatedHeader)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     WidgetHeaderComponent.prototype.deleteHeader = function (_id) {
-        this.widgetService.deleteWidget(_id);
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var _this = this;
+        this.widgetService.deleteWidget(this.widgetId)
+            .subscribe(function () {
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     return WidgetHeaderComponent;
 }());
@@ -1599,20 +1626,32 @@ var WidgetImageComponent = (function () {
             _this.widgetId = params['wgid'];
             _this.userId = params['uid'];
             _this.websiteId = params['wid'];
-            _this.widget = _this.widgetService.findWidgetById(_this.widgetId);
-            _this.size = _this.widget.size;
-            _this.url = _this.widget.url;
-            _this.text = _this.widget.text;
-            _this.width = _this.widget.width;
+            _this.widgetService.findWidgetById(_this.widgetId)
+                .subscribe(function (widget) {
+                _this.widget = widget;
+                _this.widgetType = _this.widget.widgetType;
+                _this.size = _this.widget.size;
+                _this.url = _this.widget.url;
+                _this.text = _this.widget.text;
+                _this.width = _this.widget.width;
+            });
         });
     };
     WidgetImageComponent.prototype.updateImage = function (text, width, url) {
-        this.widgetService.updateWidget(this.widgetId, new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'IMAGE', this.pageId, null, width, text, url));
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var _this = this;
+        var updatedImage = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'IMAGE', this.pageId, null, width, text, url);
+        this.widgetService.updateWidget(this.widgetId, updatedImage)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     WidgetImageComponent.prototype.deleteImage = function (_id) {
-        this.widgetService.deleteWidget(_id);
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var _this = this;
+        this.widgetService.deleteWidget(this.widgetId)
+            .subscribe(function () {
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     return WidgetImageComponent;
 }());
@@ -1690,20 +1729,31 @@ var WidgetYoutubeComponent = (function () {
             _this.websiteId = params['wid'];
             _this.pageId = params['pid'];
             _this.widgetId = params['wgid'];
-            _this.widget = _this.widgetService.findWidgetById(_this.widgetId);
-            _this.size = _this.widget.size;
-            _this.url = _this.widget.url;
-            _this.width = _this.widget.width;
-            _this.text = _this.widget.text;
+            _this.widgetService.findWidgetById(_this.widgetId)
+                .subscribe(function (widget) {
+                _this.widget = widget;
+                _this.size = _this.widget.size;
+                _this.url = _this.widget.url;
+                _this.text = _this.widget.text;
+                _this.width = _this.widget.width;
+            });
         });
     };
     WidgetYoutubeComponent.prototype.updateYoutube = function (text, url, width) {
-        this.widgetService.updateWidget(this.widgetId, new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'YOUTUBE', this.pageId, '', this.widgetId, text, url));
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var _this = this;
+        var updatedYoutube = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'YOUTUBE', this.pageId, null, width, text, url);
+        this.widgetService.updateWidget(this.widgetId, updatedYoutube)
+            .subscribe(function (widget) {
+            _this.widget = widget;
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     WidgetYoutubeComponent.prototype.deleteYoutube = function (_id) {
-        this.widgetService.deleteWidget(_id);
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);
+        var _this = this;
+        this.widgetService.deleteWidget(this.widgetId)
+            .subscribe(function () {
+            _this.router.navigate(['user/', _this.userId, 'website', _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     return WidgetYoutubeComponent;
 }());
@@ -1785,15 +1835,13 @@ var WidgetListComponent = (function () {
             _this.websiteId = params['wid'];
             _this.pageId = params['pid'];
         });
-        this.websiteService.findWebsiteById(this.websiteId)
-            .subscribe(function (website) {
-            _this.website = website;
+        this.widgetService.findWidgetsByPageId(this.pageId)
+            .subscribe(function (widgets) {
+            _this.widgets = widgets;
         });
-        this.pageService.findPageById(this.pageId);
     };
     WidgetListComponent.prototype.fetchWidgets = function () {
-        var widgets = this.widgetService.findWidgetsByPageId(this.pageId);
-        return widgets;
+        return this.widgets;
     };
     WidgetListComponent.prototype.updateWidget = function (_id) {
         this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', _id]);
@@ -2233,8 +2281,10 @@ var _a;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WidgetService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__ = __webpack_require__("../../../../../src/app/models/widget.model.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_widget_model_client__ = __webpack_require__("../../../../../src/app/models/widget.model.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2247,18 +2297,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 // injecting service into module
 var WidgetService = (function () {
-    function WidgetService() {
-        this.widgets = [
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('123', 'HEADING', '321', 2, 'null', 'GIZMODO', 'null'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('234', 'HEADING', '321', 4, 'null', 'Lorem ipsum', 'null'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('345', 'IMAGE', '321', 'null', '100%', 'null', 'http://lorempixel.com/400/200/'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('456', 'HTML', '321', 'null', 'null', '<p>Lorem ipsum</p>', 'null'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('567', 'HEADING', '321', 4, 'null', 'Lorem ipsum', 'null'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('678', 'YOUTUBE', '321', 'null', '100%', 'null', 'https://www.youtube.com/embed/gWhqLVkjK50'),
-            new __WEBPACK_IMPORTED_MODULE_2__models_widget_model_client__["a" /* Widget */]('789', 'HTML', '321', 'null', 'null', '<p>Lorem ipsum</p>', 'null')
-        ];
+    function WidgetService(http) {
+        this.http = http;
+        this.baseUrl = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].baseUrl;
         this.api = {
             'createWidget': this.createWidget,
             'findWidgetsByPageId': this.findWidgetsByPageId,
@@ -2270,50 +2315,50 @@ var WidgetService = (function () {
     WidgetService.prototype.createWidget = function (pageId, widget) {
         widget._id = (Math.floor((Math.random() * 2001) + 2000)).toString();
         widget.pageId = pageId;
-        this.widgets.push(widget);
-        return widget;
+        var url = this.baseUrl + '/api/page/' + pageId + '/widget';
+        console.log(widget);
+        return this.http.post(url, widget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetsByPageId = function (pageId) {
-        var list = [];
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x].pageId === pageId) {
-                list.push(this.widgets[x]);
-            }
-        }
-        return list;
+        var url = this.baseUrl + '/api/page/' + pageId + '/widget';
+        return this.http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.findWidgetById = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                return this.widgets[x];
-            }
-        }
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        return this.http.get(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.updateWidget = function (widgetId, widget) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                this.widgets[x] = widget;
-                return true;
-            }
-        }
-        return false;
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        var updatedWidget = new __WEBPACK_IMPORTED_MODULE_4__models_widget_model_client__["a" /* Widget */](widgetId, widget.widgetType, widget.pageId, widget.size, widget.width, widget.text, widget.url);
+        return this.http.put(url, updatedWidget)
+            .map(function (response) {
+            return response.json();
+        });
     };
     WidgetService.prototype.deleteWidget = function (widgetId) {
-        for (var x = 0; x < this.widgets.length; x++) {
-            if (this.widgets[x]._id === widgetId) {
-                this.widgets.splice(x, 1);
-                return true;
-            }
-        }
-        return false;
+        var url = this.baseUrl + '/api/widget/' + widgetId;
+        return this.http.delete(url)
+            .map(function (response) {
+            return response.json();
+        });
     };
     return WidgetService;
 }());
 WidgetService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Http */]) === "function" && _a || Object])
 ], WidgetService);
 
+var _a;
 //# sourceMappingURL=widget.service.client.js.map
 
 /***/ }),

@@ -39,7 +39,7 @@ module.exports = function(app) {
   function updatePage(req, res){
     const pageId = req.params["pid"];
     const updatedPage = req.body;
-    for (let x = 0; x < pages.length; x++) {
+    for (var x = 0; x < pages.length; x++) {
       if (pages[x]._id === pageId) {
         pages[x] = updatedPage;
         res.json(pages);
@@ -49,7 +49,7 @@ module.exports = function(app) {
   }
   function deletePage(req, res){
     const pageId = req.params["pid"];
-    for (let x = 0; x < pages.length; x++) {
+    for (var x = 0; x < pages.length; x++) {
       if (pages[x]._id === pageId) {
         pages.splice(x, 1);
         res.json(pages);

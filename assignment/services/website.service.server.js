@@ -44,7 +44,7 @@ module.exports = function(app){
   function updateWebsite(req, res){
     const websiteId = req.params["wid"];
     const updatedWebsite = req.body;
-    for (let x = 0; x < websites.length; x++) {
+    for (var x = 0; x < websites.length; x++) {
       if (websites[x]._id === websiteId) {
         websites[x] = updatedWebsite;
         res.json(websites);
@@ -54,7 +54,7 @@ module.exports = function(app){
   }
   function deleteWebsite(req, res){
     const websiteId = req.params["wid"];
-    for (let x = 0; x < websites.length; x++) {
+    for (var x = 0; x < websites.length; x++) {
       if (websites[x]._id === websiteId) {
         websites.splice(x, 1);
         res.json(websites);
