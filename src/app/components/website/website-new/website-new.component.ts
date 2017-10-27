@@ -14,6 +14,7 @@ export class WebsiteNewComponent implements OnInit {
   description: string;
   errorFlag: boolean;
   errorMsg = 'Name field cannot be empty!';
+  websites: Website[];
 
   constructor(private websiteService: WebsiteService,
               private route: ActivatedRoute,
@@ -24,11 +25,14 @@ export class WebsiteNewComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
     });
+    this.websiteService.findAllWebsitesForUser(this.userId)
+      .subscribe((websites) => {
+        this.websites = websites;
+      });
   }
 
   fetchWebsites() {
-    const websites: Website[] = this.websiteService.findWebsitesByUser(this.userId);
-    return websites;
+   return this.websites;
   }
 
   addWebsite(name, description) {
@@ -36,10 +40,12 @@ export class WebsiteNewComponent implements OnInit {
       this.errorFlag = true;
       return;
     }
-    let website = new Website('', name, this.userId, description);
-    website = this.websiteService.createWebsite(this.userId, website);
-    if (website) {
-      this.router.navigate(['/user', this.userId, 'website']);
-    }
+    const website = new Website('', name, this.userId, description);
+    this.websiteService.createWebsite(this.userId, website)
+      .subscribe((website1) => {
+        if (website1) {
+          this.router.navigate(['/user', this.userId, 'website']);
+        }
+      });
   }
 }

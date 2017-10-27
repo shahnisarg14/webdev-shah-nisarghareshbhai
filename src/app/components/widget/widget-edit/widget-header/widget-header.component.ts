@@ -42,7 +42,7 @@ export class WidgetHeaderComponent implements OnInit {
       this.errorFlag = true;
       return;
     }
-    if ((text === undefined) || (text === null)) {
+    if ((text === undefined) || (text === null) || (text === '')) {
       this.errorMsg = 'Text field should not be empty!';
       this.errorFlag = true;
       return;

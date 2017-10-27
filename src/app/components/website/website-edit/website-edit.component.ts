@@ -15,6 +15,7 @@ export class WebsiteEditComponent implements OnInit {
   website: Website;
   name: string;
   description: string;
+  websites: Website[];
 
   constructor(private websiteService: WebsiteService,
               private route: ActivatedRoute,
@@ -25,27 +26,38 @@ export class WebsiteEditComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
       this.websiteId = params['wid'];
-      this.website = this.websiteService.findWebsiteById(this.websiteId);
-      this.name = this.website.name;
-      this.description = this.website.description;
+      this.websiteService.findWebsiteById(this.websiteId)
+        .subscribe((website) => {
+          this.website = website;
+          this.name = this.website.name;
+          this.description = this.website.description;
+        });
+      this.websiteService.findAllWebsitesForUser(this.userId)
+        .subscribe((websites) => {
+          this.websites = websites;
+        });
     });
   }
 
   fetchWebsites() {
-    const websites: Website[] = this.websiteService.findWebsitesByUser(this.userId);
-    return websites;
+    return this.websites;
   }
 
   updateWebsite(name, description) {
     const website = new Website(this.websiteId, name, this.userId, description);
-    if (this.websiteService.updateWebsite(this.websiteId, website)) {
-      this.router.navigate(['/user', this.userId, 'website']);
-    }
+    this.websiteService.updateWebsite(this.websiteId, website)
+      .subscribe((website1) => {
+        this.website = website1;
+        this.name = this.website.name;
+      });
+    this.router.navigate(['user/', this.userId, 'website']);
   }
 
   deleteWebsite() {
-    if (this.websiteService.deleteWebsite(this.websiteId)) {
-      this.router.navigate(['/user', this.userId, 'website']);
-    }
+    this.websiteService.deleteWebsite(this.websiteId)
+      .subscribe((websites) => {
+        this.websites = websites;
+        this.router.navigate(['user', this.userId, 'website']);
+      });
   }
 }

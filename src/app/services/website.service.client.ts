@@ -12,70 +12,61 @@ import {getContentOfKeyLiteral} from '@angular/cli/lib/ast-tools';
 
 export class WebsiteService {
 
-  constructor() {
+  constructor(private http: Http) {
   }
-
-  websites: Website[] = [
-    new Website('123', 'Facebook', '456', 'Lorem'),
-    new Website('234', 'Tweeter', '456', 'Lorem'),
-    new Website('456', 'Gizmodo', '456', 'Lorem'),
-    new Website('890', 'Go', '123', 'Lorem'),
-    new Website('567', 'Tic Tac Toe', '123', 'Lorem'),
-    new Website('678', 'Checkers', '123', 'Lorem'),
-    new Website('789', 'Chess', '234', 'Lorem'),
-  ];
+  baseUrl = environment.baseUrl;
 
   api = {
     'createWebsite'   : this.createWebsite,
-    'findWebsitesByUser' : this.findWebsitesByUser,
+    'findWebsitesByUser' : this.findAllWebsitesForUser,
     'findWebsiteById' : this.findWebsiteById,
     'updateWebsite' : this.updateWebsite,
     'deleteWebsite' : this.deleteWebsite
   };
 
   createWebsite(userId: string, website: Website) {
-    const new_website = { _id: (Math.floor((Math.random() * 2001) + 2000)).toString(),
+    const url = this.baseUrl + '/api/user/' + userId + '/website';
+    const newWebsite = { _id: (Math.floor((Math.random() * 2001) + 2000)).toString(),
       name: website.name,
       developerId: userId,
       description: website.description}
-      this.websites.push(new_website);
-    return new_website;
+    return this.http.post(url, newWebsite)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
-  findWebsitesByUser(userId: string) {
-    const list: Website[] = [];
-    for (let x = 0; x < this.websites.length; x++) {
-      if (this.websites[x].developerId === userId) {
-        list.push(this.websites[x]);
-      }
-    }
-    return list;
+  findAllWebsitesForUser(userId: string) {
+    const url = this.baseUrl + '/api/user/' + userId + '/website';
+    return this.http.get(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   findWebsiteById(websiteId: string) {
-    for (let x = 0; x < this.websites.length; x++) {
-      if (this.websites[x]._id === websiteId) {  return this.websites[x]; }
-    }
+    const url = this.baseUrl + '/api/website/' + websiteId;
+    return this.http.get(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   updateWebsite(websiteId: string, website: Website) {
-    for (let x = 0; x < this.websites.length; x++) {
-      if (this.websites[x]._id === websiteId) {
-        this.websites[x] = website;
-        return true;
-      }
-    }
-    return false;
+    const url = this.baseUrl + '/api/website/' + websiteId;
+    const updatedWebsite = new Website(websiteId, website.name, website.developerId, website.description);
+    return this.http.put(url, updatedWebsite)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   deleteWebsite(websiteId) {
-    for (let x = 0; x < this.websites.length; x++) {
-      if (this.websites[x]._id === websiteId) {
-        this.websites.splice(x, 1);
-        return true;
-      }
-    }
-    return false;
+    const url = this.baseUrl + '/api/website/' + websiteId;
+    return this.http.delete(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 }
 

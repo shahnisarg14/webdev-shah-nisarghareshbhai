@@ -15,6 +15,7 @@ export class PageEditComponent implements OnInit {
   page: Page;
   name: string;
   description: string;
+  pages: Page[];
 
   constructor(private pageService: PageService,
               private route: ActivatedRoute,
@@ -26,27 +27,45 @@ export class PageEditComponent implements OnInit {
       this.userId = params['uid'];
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
-      this.page = this.pageService.findPageById(this.pageId);
-      this.name = this.page.name;
-      this.description = this.page.description;
+      this.pageService.findPageById(this.pageId)
+        .subscribe((page) => {
+          this.page = page;
+          this.name = this.page.name;
+          this.description = this.page.description;
+        });
+      this.pageService.findPagesByWebsiteId(this.websiteId)
+        .subscribe((pages) => {
+          this.pages = pages;
+        });
     });
   }
 
   fetchPages() {
-    const pages: Page[] = this.pageService.findPagesByWebsiteId(this.websiteId);
-    return pages;
+    return this.pages;
   }
 
   updatePage(name, description) {
     const page = new Page(this.pageId, name, this.websiteId, description);
+    this.pageService.updatePage(this.pageId, page)
+      .subscribe((page1) => {
+        this.page = page1;
+        this.name = this.page.name;
+      });
+    this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
+    /*const page = new Page(this.pageId, name, this.websiteId, description);
     if (this.pageService.updatePage(this.pageId, page)) {
       this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    }
+    }*/
   }
 
   deletePage() {
-    if (this.pageService.deletePage(this.pageId)) {
+    this.pageService.deletePage(this.pageId)
+      .subscribe((pages) => {
+        this.pages = pages;
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
+      });
+   /* if (this.pageService.deletePage(this.pageId)) {
       this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    }
+    }*/
   }
 }

@@ -11,15 +11,8 @@ import { User } from '../models/user.model.client';
 
 export class UserService {
 
-  constructor() {
+  constructor(private http: Http) {
   }
-
-  users: User[] = [
-    new User('123', 'alice', 'alice', 'Alice', 'Wonder'),
-    new User('234', 'bob', 'bob', 'Bob', 'Marley'),
-    new User('345', 'charly', 'charly', 'Charly', 'Garcia'),
-    new User('456', 'jannunzi', 'jannunzi', 'Jose', 'Annunzi')
-  ];
 
   api = {
     'createUser'   : this.createUser,
@@ -31,52 +24,52 @@ export class UserService {
   };
 
   createUser(user: User) {
+    const url = 'http://localhost:3100/api/user/';
     user._id = (Math.floor((Math.random() * 1001) + 1000)).toString();
-    this.users.push(user);
-    return user;
+    return this.http.post(url, user)
+      .map((response: Response) => {
+      return response.json();
+    });
   }
 
   findUserById(userId: string) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x]._id === userId) {  return this.users[x]; }
-    }
+    const url = 'http://localhost:3100/api/user/' + userId;
+    return this.http.get(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
-  /*findUserById(userId: string) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x]._id === userId) {return this.users[x]; }
-    }
-  }*/
-
   findUserByUsername(username: string) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x].username === username) {  return this.users[x]; }
-    }
+    const url = 'http://localhost:3100/api/user?username=' + username;
+    return this.http.get(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   findUserByCredentials(username, password) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x].username === username && this.users[x].password === password) { return this.users[x]; }
-    }
+    const url = 'http://localhost:3100/api/user?username=' + username + '&password=' + password;
+    return this.http.get(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   updateUser(userId, user: any) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x]._id === userId) {
-        this.users[x] = user;
-        return true;
-      }
-    }
+    const url = 'http://localhost:3100/api/user/' + userId;
+    return this.http.put(url, user)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 
   deleteUser(userId) {
-    for (let x = 0; x < this.users.length; x++) {
-      if (this.users[x]._id === userId) {
-        this.users.splice(x, 1);
-        return true;
-      }
-    }
-    return false;
+    const url = 'http://localhost:3100/api/user/' + userId;
+    return this.http.delete(url)
+      .map((response: Response) => {
+        return response.json();
+      });
   }
 }
 

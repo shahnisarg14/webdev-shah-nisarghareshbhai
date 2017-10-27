@@ -14,6 +14,7 @@ export class PageListComponent implements OnInit {
   page: Page;
   userId: string;
   pageId: string;
+  pages: Page[];
 
   constructor(private pageService: PageService,
               private route: ActivatedRoute) {
@@ -24,12 +25,14 @@ export class PageListComponent implements OnInit {
       this.userId = params['uid'];
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
-      this.page = this.pageService.findPageById(this.pageId);
+      this.pageService.findPagesByWebsiteId(this.websiteId)
+        .subscribe((pages) => {
+          this.pages = pages;
+        });
     });
   }
 
   fetchPages() {
-    const pages: Page[] = this.pageService.findPagesByWebsiteId(this.websiteId);
-    return pages;
+    return this.pages;
   }
 }

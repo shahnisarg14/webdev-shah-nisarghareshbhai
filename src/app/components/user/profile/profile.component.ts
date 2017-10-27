@@ -27,17 +27,21 @@ export class ProfileComponent implements OnInit {
   getUser() {
     this.route.params.subscribe(params => {
       this.userId = params['uid'];
-      const user = this.userService.findUserById(this.userId);
-      this.username = user.username;
-      this.firstName = user.firstName;
-      this.lastName = user.lastName;
-      this.password = user.password;
+      this.userService.findUserById(this.userId)
+        .subscribe((user) => {
+          this.username = user.username;
+          this.firstName = user.firstName;
+          this.lastName = user.lastName;
+          this.password = user.password;
+        });
     });
   }
 
   update_user(userName, firstName, lastName) {
     const user = new User(this.userId, userName, this.password, firstName, lastName);
-    if (this.userService.updateUser(this.userId, user)) {
-    }
+    this.userService.updateUser(this.userId, user)
+      .subscribe((user1) => {
+      this.user = user1;
+    });
   }
 }

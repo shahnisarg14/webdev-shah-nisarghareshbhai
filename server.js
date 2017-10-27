@@ -39,7 +39,7 @@ app.set('port', port);
 // Create HTTP server
 const server = http.createServer(app);
 
-var serverSide = require("./server/test-mongodb/app");
+var serverSide = require("./assignment/app");
 serverSide(app);
 
 
@@ -51,5 +51,3 @@ app.get('*', function (req, res) {
 
 
 server.listen( port , () => console.log('Running'));
-
-
