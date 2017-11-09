@@ -25,7 +25,6 @@ export class UserService {
 
   createUser(user: User) {
     const url = this.baseUrl + '/api/user/';
-    user._id = (Math.floor((Math.random() * 1001) + 1000)).toString();
     return this.http.post(url, user)
       .map((response: Response) => {
       return response.json();
@@ -56,9 +55,11 @@ export class UserService {
       });
   }
 
-  updateUser(userId, user: any) {
+  updateUser(userId, user) {
     const url = this.baseUrl + '/api/user/' + userId;
-    return this.http.put(url, user)
+    const newUser = new User(userId, user.username, user.password, user.firstName, user.lastName);
+    console.log(newUser);
+    return this.http.put(url, newUser)
       .map((response: Response) => {
         return response.json();
       });

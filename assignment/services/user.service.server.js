@@ -1,6 +1,9 @@
-var User = require("../models/user.model.server");
+var User = require("../models/user/user.model.server");
 
 module.exports=function (app) {
+
+  var userModel = require('../models/user/user.model.server');
+
   var users = [
     new User("123", "alice", "alice", "Alice", "Wonder"),
     new User("234", "bob", "bob", "Bob", "Marley"),
@@ -16,63 +19,65 @@ module.exports=function (app) {
 
   function createUser(req, res){
     const user = req.body;
-    const newUser = new User(user._id, user.username, user.password, user.firstName, user.lastName);
-    users.push(newUser);
-    res.json(newUser);
+    userModel
+      .createUser(user)
+      .then(function(user){
+        res.json(user);
+      });
   }
 
   function updateUser(req, res) {
     const user = req.body;
-    const userId = req.params["uid"];
-    for (var i = 0; i < users.length; i++) {
-      if (users[i]._id === userId) {
-        users[i] = user;
-        res.json(users);
-      }
-    }
+    const userId = req.params["userId"];
+    userModel
+      .updateUser(userId, user)
+      .then(function(status) {
+        res.send(status);
+      });
   }
   function deleteUser(req, res){
-    const userId = req.params["uid"];
-    for (var i = 0; i < users.length; i++) {
-      if (users[i]._id === userId) {
-        users.splice(i,1);
-        res.json(users);
-      }
-    }
+    var userId = req.params['userId'];
+    userModel
+      .deleteUser(userId)
+      .then(function(status) {
+        res.send(status);
+      });
   }
+
   function findUsers(req, res){
     const username=req.query["username"];
     const password=req.query["password"];
     if(username && password) {
-      const user = users.find(function(user){
-        return user.username === username && user.password === password;
-      });
-      if(user){
+      var promise = userModel
+        .findUserByCredentials(username, password);
+      promise.then(function(user){
         res.json(user);
-      } else{
-        res.json({});
-      }
+      });
       return;
     }
     else if(username){
-      const user = users.find(function (user){
-        return user.username === username;
+      var promise = userModel
+        .findUserByUsername(username);
+      promise.then(function (user) {
+        res.json(user)
       });
-      if(user){
-        res.json(user);
-      } else{
-        res.json({});
-      }
       return;
     }
+    var promise = userModel
+      .findAllUsers();
+    promise.then(function(users) {
+      res.json(users)
+    });
     res.json(users);
   }
+
   function findUserById(req, res) {
     const userId = req.params["uid"];
-    const user = users.find(function (user) {
-      return user._id === userId
+    var promise = userModel
+      .findUserById(userId);
+    promise.then(function(user) {
+      res.json(user)
     });
-    res.json(user);
   }
 
 };

@@ -927,22 +927,44 @@ var RegisterComponent = (function () {
     function RegisterComponent(userService, router) {
         this.userService = userService;
         this.router = router;
-        this.errorMsg = 'Passwords do not match!';
     }
     RegisterComponent.prototype.ngOnInit = function () {
     };
+    /*register(username, password, verifyPassword) {
+      if (password === verifyPassword) {
+        const user = new User('', username, password, '', '');
+        this.userService.createUser(user).subscribe((user1) => {
+          this.user = user1;
+          this.router.navigate(['/login']);
+        });
+        } else {
+        this.errorFlag = true;
+      }
+    }*/
     RegisterComponent.prototype.register = function (username, password, verifyPassword) {
         var _this = this;
-        if (password === verifyPassword) {
-            var user = new __WEBPACK_IMPORTED_MODULE_3__models_user_model_client__["a" /* User */]('', username, password, '', '');
-            this.userService.createUser(user).subscribe(function (user1) {
-                _this.user = user1;
-                _this.router.navigate(['/login']);
-            });
-        }
-        else {
-            this.errorFlag = true;
-        }
+        this.userService.findUserByUsername(username)
+            .subscribe(function (user1) {
+            if (user1 === null) {
+                if (password === verifyPassword) {
+                    _this.username = username;
+                    _this.password = password;
+                    var newUser = new __WEBPACK_IMPORTED_MODULE_3__models_user_model_client__["a" /* User */]('', _this.username, _this.password, null, null);
+                    _this.userService.createUser(newUser)
+                        .subscribe(function (user2) {
+                        _this.router.navigate(['user/', user2._id]);
+                    });
+                }
+                else {
+                    _this.errorMsg = 'Passwords do not match!';
+                    _this.errorFlag = true;
+                }
+            }
+            else {
+                _this.errorMsg = 'Username already exists!';
+                _this.errorFlag = true;
+            }
+        });
     };
     return RegisterComponent;
 }());
@@ -2107,6 +2129,7 @@ var _a;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__("../../../../../src/environments/environment.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__models_user_model_client__ = __webpack_require__("../../../../../src/app/models/user.model.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2116,6 +2139,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -2136,7 +2160,6 @@ var UserService = (function () {
     }
     UserService.prototype.createUser = function (user) {
         var url = this.baseUrl + '/api/user/';
-        user._id = (Math.floor((Math.random() * 1001) + 1000)).toString();
         return this.http.post(url, user)
             .map(function (response) {
             return response.json();
@@ -2165,7 +2188,9 @@ var UserService = (function () {
     };
     UserService.prototype.updateUser = function (userId, user) {
         var url = this.baseUrl + '/api/user/' + userId;
-        return this.http.put(url, user)
+        var newUser = new __WEBPACK_IMPORTED_MODULE_4__models_user_model_client__["a" /* User */](userId, user.username, user.password, user.firstName, user.lastName);
+        console.log(newUser);
+        return this.http.put(url, newUser)
             .map(function (response) {
             return response.json();
         });

@@ -14,7 +14,7 @@ export class RegisterComponent implements OnInit {
   verifyPassword: string;
   password: string;
   username: string;
-  errorMsg = 'Passwords do not match!';
+  errorMsg: string;
   errorFlag: boolean;
   constructor(private userService: UserService,
               private router: Router) {
@@ -23,7 +23,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  register(username, password, verifyPassword) {
+  /*register(username, password, verifyPassword) {
     if (password === verifyPassword) {
       const user = new User('', username, password, '', '');
       this.userService.createUser(user).subscribe((user1) => {
@@ -33,6 +33,30 @@ export class RegisterComponent implements OnInit {
       } else {
       this.errorFlag = true;
     }
+  }*/
+
+  register(username, password, verifyPassword) {
+    this.userService.findUserByUsername(username)
+      .subscribe((user1: User) => {
+        if (user1 === null) {
+          if (password === verifyPassword) {
+            this.username = username;
+            this.password = password;
+            const newUser = new User('', this.username, this.password, null, null);
+            this.userService.createUser(newUser)
+              .subscribe((user2) => {
+                this.router.navigate(['user/', user2._id]);
+              });
+          } else {
+            this.errorMsg = 'Passwords do not match!';
+            this.errorFlag = true;
+          }
+        } else {
+          this.errorMsg = 'Username already exists!';
+          this.errorFlag = true;
+        }
+      });
+
   }
 
 }
