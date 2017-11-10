@@ -27,7 +27,6 @@ export class WidgetService {
     widget._id = (Math.floor((Math.random() * 2001) + 2000)).toString();
     widget.pageId = pageId;
     const url = this.baseUrl + '/api/page/' + pageId + '/widget';
-    console.log(widget);
     return this.http.post(url, widget)
       .map((response: Response) => {
         return response.json();

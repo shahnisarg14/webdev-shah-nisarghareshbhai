@@ -389,12 +389,8 @@ var PageEditComponent = (function () {
             .subscribe(function (page1) {
             _this.page = page1;
             _this.name = _this.page.name;
+            _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page']);
         });
-        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-        /*const page = new Page(this.pageId, name, this.websiteId, description);
-        if (this.pageService.updatePage(this.pageId, page)) {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-        }*/
     };
     PageEditComponent.prototype.deletePage = function () {
         var _this = this;
@@ -403,9 +399,6 @@ var PageEditComponent = (function () {
             _this.pages = pages;
             _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page']);
         });
-        /* if (this.pageService.deletePage(this.pageId)) {
-           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-         }*/
     };
     return PageEditComponent;
 }());
@@ -564,6 +557,10 @@ var PageNewComponent = (function () {
             _this.userId = params['uid'];
             _this.websiteId = params['wid'];
             _this.pageId = params['pid'];
+            _this.pageService.findPageById(_this.pageId)
+                .subscribe(function (page) {
+                _this.page = page;
+            });
             _this.pageService.findPagesByWebsiteId(_this.websiteId)
                 .subscribe(function (pages) {
                 _this.pages = pages;
@@ -582,15 +579,9 @@ var PageNewComponent = (function () {
         var page = new __WEBPACK_IMPORTED_MODULE_1__models_page_model_client__["a" /* Page */]('', name, this.websiteId, description);
         this.pageService.createPage(this.websiteId, page)
             .subscribe(function (page1) {
-            if (page1) {
-                _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page']);
-            }
+            _this.pages = page1;
+            _this.router.navigate(['/user', _this.userId, 'website', _this.websiteId, 'page']);
         });
-        /*let page = new Page('', name, this.websiteId, description);
-        page = this.pageService.createPage(this.websiteId, page);
-        if (page) {
-          this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-        }*/
     };
     return PageNewComponent;
 }());
@@ -1062,8 +1053,8 @@ var WebsiteEditComponent = (function () {
             .subscribe(function (website1) {
             _this.website = website1;
             _this.name = _this.website.name;
+            _this.router.navigate(['user/', _this.userId, 'website']);
         });
-        this.router.navigate(['user/', this.userId, 'website']);
     };
     WebsiteEditComponent.prototype.deleteWebsite = function () {
         var _this = this;
@@ -2340,7 +2331,6 @@ var WidgetService = (function () {
         widget._id = (Math.floor((Math.random() * 2001) + 2000)).toString();
         widget.pageId = pageId;
         var url = this.baseUrl + '/api/page/' + pageId + '/widget';
-        console.log(widget);
         return this.http.post(url, widget)
             .map(function (response) {
             return response.json();

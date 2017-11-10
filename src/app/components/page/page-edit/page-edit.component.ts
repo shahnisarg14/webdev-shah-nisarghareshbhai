@@ -50,12 +50,8 @@ export class PageEditComponent implements OnInit {
       .subscribe((page1) => {
         this.page = page1;
         this.name = this.page.name;
+        this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
       });
-    this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    /*const page = new Page(this.pageId, name, this.websiteId, description);
-    if (this.pageService.updatePage(this.pageId, page)) {
-      this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    }*/
   }
 
   deletePage() {
@@ -64,8 +60,5 @@ export class PageEditComponent implements OnInit {
         this.pages = pages;
         this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
       });
-   /* if (this.pageService.deletePage(this.pageId)) {
-      this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    }*/
   }
 }

@@ -1,6 +1,8 @@
-var Widget = require("../models/widget.model.server");
+var Widget = require("../models/widget/widget.model.server");
 
 module.exports = function(app) {
+
+  var widgetModel = require('../models/widget/widget.model.server');
   var multer = require('multer');
   var upload = multer({ dest:__dirname + '/../../dist/assets/uploads'});
   var widgets = [
@@ -21,49 +23,67 @@ module.exports = function(app) {
   app.post("/api/upload", upload.single('myFile'), uploadImage);
 
   function createWidget(req, res) {
+    const pageId = request.params['pid'];
     const widget = req.body;
-    const newWidget = new Widget(widget._id, widget.widgetType, widget.pageId, widget.size, widget.width, widget.text,
-      widget.url);
-    widgets.push(newWidget);
-    res.json(newWidget);
+    widget.pageId = pageId;
+    delete widget._id;
+    widgetModel
+      .createWidget(widget)
+      .then(function (widget1) {
+        widgetModel
+          .findWidgetsByPageId(pageId)
+          .then(function (widgets) {
+            response.json(widgets);
+          }, function (error) {
+            console.log(error);
+          });
+      }, function (error) {
+        console.log(error);
+      });
   }
+
   function findAllWidgetsForPage(req, res) {
-    const pageId = req.params["pid"];
-    const list = [];
-    for (var x = 0; x < widgets.length; x++) {
-      if (widgets[x].pageId === pageId) {
-        list.push(widgets[x]);
-      }
-    }
-    res.json(list);
+    var pageId = request.params['pid'];
+    widgetModel
+      .findWidgetsByPageId(pageId)
+      .then(function(widgets) {
+        response.json(widgets);
+      }, function(error) {
+        console.log(error);
+      });
   }
   function findWidgetById(req, res) {
-    const widgetId = req.params["wgid"];
-    const widget = widgets.find(function (widget) {
-      return widget._id === widgetId
-    });
-    res.json(widget);
+    var widgetId = request.params['wgid'];
+    widgetModel
+      .findWidgetById(widgetId)
+      .then(function(widget) {
+        response.json(widget);
+      });
   }
   function updateWidget(req, res) {
-    const widgetId = req.params["wgid"];
-    const updatedWidget = req.body;
-    for (var x = 0; x < widgets.length; x++) {
-      if (widgets[x]._id === widgetId) {
-        widgets[x] = updatedWidget;
-        res.json(widgets);
-        return;
-      }
-    }
+    var widgetId = request.params['wgid'];
+    var widget = request.body;
+    widgetModel
+      .updateWidget(widgetId, widget)
+      .then(function(status) {
+        response.send(status);
+      });
   }
   function deleteWidget(req, res) {
-    const widgetId = req.params["wgid"];
-    for (var x = 0; x < widgets.length; x++) {
-      if (widgets[x]._id === widgetId) {
-        widgets.splice(x, 1);
-        res.json(widgets);
-        return;
-      }
-    }
+    var pageId = request.params['pid'];
+    var widgetId = request.params['wgid'];
+    widgetModel
+      .deleteWidget(widgetId)
+      .then(function(status) {
+        response.send(status);
+        widgetModel
+          .findWidgetsByPageId(pageId)
+          .then(function(widgets) {
+            response.json(widgets);
+          }, function(error) {
+            console.log(error);
+          });
+      });
   }
   function uploadImage(req, res) {
     var widgetId      = req.body.widgetId;

@@ -49,8 +49,8 @@ export class WebsiteEditComponent implements OnInit {
       .subscribe((website1) => {
         this.website = website1;
         this.name = this.website.name;
+        this.router.navigate(['user/', this.userId, 'website']);
       });
-    this.router.navigate(['user/', this.userId, 'website']);
   }
 
   deleteWebsite() {

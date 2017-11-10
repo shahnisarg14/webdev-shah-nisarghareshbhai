@@ -29,6 +29,10 @@ export class PageNewComponent implements OnInit {
       this.userId = params['uid'];
       this.websiteId = params['wid'];
       this.pageId = params['pid'];
+      this.pageService.findPageById(this.pageId)
+        .subscribe((page) => {
+          this.page = page;
+        });
       this.pageService.findPagesByWebsiteId(this.websiteId)
         .subscribe((pages) => {
           this.pages = pages;
@@ -48,14 +52,8 @@ export class PageNewComponent implements OnInit {
     const page = new Page('', name, this.websiteId, description);
     this.pageService.createPage(this.websiteId, page)
     .subscribe((page1) => {
-        if (page1) {
+          this.pages = page1;
           this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-        }
       });
-    /*let page = new Page('', name, this.websiteId, description);
-    page = this.pageService.createPage(this.websiteId, page);
-    if (page) {
-      this.router.navigate(['/user', this.userId, 'website', this.websiteId, 'page']);
-    }*/
   }
 }
