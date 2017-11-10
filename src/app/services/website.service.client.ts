@@ -26,11 +26,7 @@ export class WebsiteService {
 
   createWebsite(userId: string, website: Website) {
     const url = this.baseUrl + '/api/user/' + userId + '/website';
-    const newWebsite = { _id: (Math.floor((Math.random() * 2001) + 2000)).toString(),
-      name: website.name,
-      developerId: userId,
-      description: website.description}
-    return this.http.post(url, newWebsite)
+    return this.http.post(url, website)
       .map((response: Response) => {
         return response.json();
       });

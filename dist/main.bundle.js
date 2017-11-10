@@ -2253,11 +2253,7 @@ var WebsiteService = (function () {
     }
     WebsiteService.prototype.createWebsite = function (userId, website) {
         var url = this.baseUrl + '/api/user/' + userId + '/website';
-        var newWebsite = { _id: (Math.floor((Math.random() * 2001) + 2000)).toString(),
-            name: website.name,
-            developerId: userId,
-            description: website.description };
-        return this.http.post(url, newWebsite)
+        return this.http.post(url, website)
             .map(function (response) {
             return response.json();
         });
