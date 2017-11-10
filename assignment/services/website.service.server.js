@@ -47,7 +47,6 @@ module.exports = function(app){
     var promise = websiteModel
       .findWebsiteById(websiteId);
     promise.then(function(website) {
-      "use strict";
       res.json(website)
     });
   }

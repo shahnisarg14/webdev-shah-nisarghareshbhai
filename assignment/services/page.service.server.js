@@ -1,6 +1,9 @@
-var Page = require("../models/page.model.server");
+var Page = require("../models/page/page.model.server");
 
 module.exports = function(app) {
+
+  var pageModel = require('../models/page/page.model.server');
+
   var pages = [
     new Page("321", "Post 1", "456", "Lorem"),
     new Page("432", "Post 2", "456", "Lorem"),
@@ -14,46 +17,52 @@ module.exports = function(app) {
   app.delete("/api/page/:pid", deletePage);
 
   function createPage(req, res) {
+    var websiteId = req.params['wid'];
     const page = req.body;
-    const newPage = new Page(page._id, page.name, page.websiteId, page.description);
-    pages.push(newPage);
-    res.json(newPage);
+    page.websiteId = websiteId;
+    delete page._id;
+
+    pageModel
+      .createPage(page)
+      .then(function(page) {
+        pageModel
+          .findAllPagesForWebsite(websiteId)
+          .then(function(pages) {
+            res.json(pages);
+          });
+      });
   }
   function findAllPagesForWebsite(req, res){
-    var websiteId = req.params["wid"];
-    var list = [];
-    for (var x = 0; x < pages.length; x++) {
-      if (pages[x].websiteId === websiteId) {
-        list.push(pages[x]);
-      }
-    }
-    res.json(list);
+    var websiteId = req.params['wid'];
+    pageModel
+      .findAllPagesForWebsite(websiteId)
+      .then(function(pages) {
+        res.json(pages);
+      });
   }
   function findPageById(req, res) {
-    const pageId = req.params["pid"];
-    const page = pages.find(function (page) {
-      return page._id === pageId
+    var pageId = req.params["pid"];
+    var promise = pageModel
+      .findPageById(pageId);
+    promise.then(function(page) {
+      res.json(page)
     });
-    res.json(page);
   }
+
   function updatePage(req, res){
-    const pageId = req.params["pid"];
-    const updatedPage = req.body;
-    for (var x = 0; x < pages.length; x++) {
-      if (pages[x]._id === pageId) {
-        pages[x] = updatedPage;
-        res.json(pages);
-        return;
-      }
-    }
+    var pageId = req.params['pid'];
+    var newPage = req.body;
+
+    pageModel.updatePage(pageId, newPage)
+      .then(function (status) {
+        res.send(status);
+      });
   }
   function deletePage(req, res){
-    const pageId = req.params["pid"];
-    for (var x = 0; x < pages.length; x++) {
-      if (pages[x]._id === pageId) {
-        pages.splice(x, 1);
-        res.json(pages);
-      }
-    }
+    var pageId = req.params['pid'];
+    pageModel.deletePage(pageId)
+      .then(function(status) {
+        res.send(status);
+      });
   }
 }
