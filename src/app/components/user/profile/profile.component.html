@@ -8,7 +8,7 @@
     </div>
     <div class="navbar-text pull-right">
       <a class="navbar-link"
-         (click)="update_user(username, firstName, lastName)">
+         (click)="update_user(username, firstName, lastName, email)">
         <span class="glyphicon glyphicon-ok colorWhite"></span>
       </a>
     </div>
@@ -31,7 +31,7 @@
     <label for="email">
       Email
     </label>
-    <input value="abc@husky.neu.edu"
+    <input [(ngModel)]="email"
            placeholder="email id"
            type="email"
            id="email"

@@ -1,0 +1,98 @@
+<div [hidden]="!editFlag">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+      <div class="navbar-text pull-left">
+        <a [routerLink]="['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+        </a>
+      </div>
+
+      <a class="navbar-brand">
+        <b class="colorWhite">Widget Edit</b>
+      </a>
+
+      <div class="navbar-text pull-right">
+        <a (click)="updateText(rows, placeholder, text, formatted)"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-ok colorWhite"></span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+</div>
+
+<div [hidden]="editFlag">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+      <div class="navbar-text pull-left">
+        <a [routerLink]="['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+        </a>
+      </div>
+
+      <a class="navbar-brand">
+        <b class="colorWhite">Widget Edit</b>
+      </a>
+
+      <div class="navbar-text pull-right">
+        <a (click)="createText(rows, placeholder, text, formatted)"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-ok colorWhite"></span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+</div>
+
+<div class="container-fluid">
+
+  <div class="form-group">
+    <label>Text</label>
+    <input [(ngModel)] ="text"
+           class="form-control"
+           type="text"
+           placeholder="Text to be entered"
+           id="text"
+           name ="text"/>
+    <label>Rows</label>
+    <input [(ngModel)] ="rows"
+           class="form-control"
+           type="number"
+           placeholder="Number of rows to be there in text area."
+           id="rows"
+           name ="rows"/>
+    <label>Placeholder</label>
+    <input [(ngModel)] ="placeholder"
+           class="form-control"
+           type="text"
+           placeholder="placeholder"
+           id="placeholder"
+           name ="placeholder"/>
+    <div class="checkbox">
+      <label><input [(ngModel)] = "formatted" type="checkbox" value=""/><b>Formatted</b></label>
+    </div>
+
+    <a class="btn btn-danger btn-block"
+       (click)="deleteText()">Delete</a>
+
+  </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+  <div class="container-fluid">
+
+    <div class="navbar-text pull-right">
+      <a [routerLink]="['/user', userId]"
+         class="navbar-link">
+        <span class="glyphicon glyphicon-user colorWhite"></span>
+      </a>
+    </div>
+
+  </div>
+</nav>

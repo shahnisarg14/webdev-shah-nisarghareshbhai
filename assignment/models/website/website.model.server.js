@@ -12,25 +12,12 @@ WebsiteModel.deleteWebsite = deleteWebsite;
 module.exports = WebsiteModel;
 
 function createWebsiteForUser(website) {
-  var newWebsite = null;
-  return WebsiteModel
-    .create(website)
-    .then(function (website) {
-      newWebsite = website;
-      UserModel
-        .findUserById(newWebsite.developerId)
-        .then(function (user) {
-          user.websites.push(newWebsite);
-          return user.save();
-        });
-    });
+  return WebsiteModel.create(website);
 }
 
 
 function findAllWebsitesForUser(userId) {
-  return WebsiteModel.find({developerId: userId})
-    .populate('developerId', 'username')
-    .exec();
+  return WebsiteModel.find({developerId: userId});
 }
 
 function findWebsiteById(websiteId) {

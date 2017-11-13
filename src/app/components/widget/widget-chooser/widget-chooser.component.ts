@@ -28,16 +28,4 @@ export class WidgetChooserComponent implements OnInit {
       this.pageId = params['pid'];
     });
   }
-
-  createWidget(type) {
-    this.widgetType = type;
-    const newWidget = new Widget(null, this.widgetType, this.pageId, null, null, null, null);
-    this.widgetService.createWidget(this.pageId, newWidget)
-      .subscribe((widget) => {
-        this.widget = widget;
-        this.widgetId = this.widget._id;
-        this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget', this.widgetId]);
-      });
-  }
-
 }

@@ -57,8 +57,7 @@ export class UserService {
 
   updateUser(userId, user) {
     const url = this.baseUrl + '/api/user/' + userId;
-    const newUser = new User(userId, user.username, user.password, user.firstName, user.lastName);
-    console.log(newUser);
+    const newUser = new User(userId, user.username, user.password, user.firstName, user.lastName, user.email);
     return this.http.put(url, newUser)
       .map((response: Response) => {
         return response.json();

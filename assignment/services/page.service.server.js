@@ -21,7 +21,6 @@ module.exports = function(app) {
     const page = req.body;
     page.websiteId = websiteId;
     delete page._id;
-
     pageModel
       .createPage(page)
       .then(function(page) {
@@ -29,6 +28,8 @@ module.exports = function(app) {
           .findAllPagesForWebsite(websiteId)
           .then(function(pages) {
             res.json(pages);
+          }, function(error) {
+            console.log(error);
           });
       });
   }
@@ -48,11 +49,9 @@ module.exports = function(app) {
       res.json(page)
     });
   }
-
   function updatePage(req, res){
     var pageId = req.params['pid'];
     var newPage = req.body;
-
     pageModel.updatePage(pageId, newPage)
       .then(function (status) {
         res.send(status);

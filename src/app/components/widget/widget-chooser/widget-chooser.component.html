@@ -19,7 +19,9 @@
 
   <ul class="list-group">
     <li class="list-group-item">
-      <a (click)="createWidget('HEADING')">Header</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new', 'header']">
+        <span class = "text text-info">Header</span>
+      </a>
     </li>
 
     <li class="list-group-item">
@@ -27,11 +29,15 @@
     </li>
 
     <li class="list-group-item">
-      <a (click)="createWidget('HTML')">HTML</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new', 'html']">
+        <span class = "text text-info">HTML</span>
+      </a>
     </li>
 
     <li class="list-group-item">
-      <a>Text Input</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new', 'text']">
+        <span class = "text text-info">Text</span>
+      </a>
     </li>
 
     <li class="list-group-item">
@@ -43,11 +49,15 @@
     </li>
 
     <li class="list-group-item">
-      <a (click)="createWidget('IMAGE')">Image</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new', 'image']">
+        <span class = "text text-info">Image</span>
+      </a>
     </li>
 
     <li class="list-group-item">
-      <a (click)="createWidget('YOUTUBE')">YouTube</a>
+      <a [routerLink]="['/user', userId, 'website', websiteId, 'page', pageId, 'widget', 'new', 'youtube']">
+        <span class = "text text-info">Youtube</span>
+      </a>
     </li>
 
     <li class="list-group-item">

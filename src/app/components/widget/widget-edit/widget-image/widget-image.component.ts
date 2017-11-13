@@ -22,6 +22,8 @@ export class WidgetImageComponent implements OnInit {
   url: string;
   width: string;
   baseUrl = environment.baseUrl;
+  editFlag: boolean;
+  widgets: Widget[];
 
   constructor(private widgetService: WidgetService,
               private router: Router,
@@ -34,20 +36,35 @@ export class WidgetImageComponent implements OnInit {
       this.widgetId = params['wgid'];
       this.userId = params['uid'];
       this.websiteId = params['wid'];
+      this.editFlag = false;
       this.widgetService.findWidgetById(this.widgetId)
         .subscribe((widget) => {
           this.widget = widget;
-          this.widgetType = this.widget.widgetType;
-          this.size = this.widget.size;
-          this.url = this.widget.url;
-          this.text = this.widget.text;
-          this.width = this.widget.width;
+          this.widgetType = widget.widgetType;
+          this.size = widget.size;
+          this.url = widget.url;
+          this.text = widget.text;
+          this.width = widget.width;
+          this.editFlag = true;
         });
     });
   }
 
+  createImage(text, width, url) {
+    const widget = new Widget('', 'IMAGE', this.pageId, null, width, text, url, null, null, null);
+    widget.text = text;
+    widget.width = width;
+    widget.url = url;
+    this.widgetService
+      .createWidget(this.pageId, widget)
+      .subscribe((widgets) => {
+        this.widgets = widgets;
+        this.router.navigate(['/user', this.userId, 'website',
+          this.websiteId, 'page', this.pageId, 'widget']);
+      });
+  }
   updateImage(text, width, url) {
-    const updatedImage = new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url);
+    const updatedImage = new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url, null, null, null);
     this.widgetService.updateWidget(this.widgetId, updatedImage)
       .subscribe((widget) => {
         this.widget = widget;
@@ -55,7 +72,7 @@ export class WidgetImageComponent implements OnInit {
       });
   }
 
-  deleteImage(_id) {
+  deleteImage() {
     this.widgetService.deleteWidget(this.widgetId)
       .subscribe(() => {
         this.router.navigate(['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']);

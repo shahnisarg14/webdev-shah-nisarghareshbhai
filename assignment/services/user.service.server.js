@@ -18,17 +18,20 @@ module.exports=function (app) {
   app.get("/api/user/:uid",findUserById);
 
   function createUser(req, res){
-    const user = req.body;
+    var newUser = req.body;
+    delete newUser._id;
     userModel
-      .createUser(user)
-      .then(function(user){
+      .createUser(newUser)
+      .then(function(user) {
         res.json(user);
+      }, function(error) {
+        console.log(error);
       });
   }
 
   function updateUser(req, res) {
-    const user = req.body;
-    const userId = req.params["userId"];
+    var user = req.body;
+    var userId = req.params["userId"];
     userModel
       .updateUser(userId, user)
       .then(function(status) {
@@ -45,8 +48,8 @@ module.exports=function (app) {
   }
 
   function findUsers(req, res){
-    const username=req.query["username"];
-    const password=req.query["password"];
+    var username=req.query["username"];
+    var password=req.query["password"];
     if(username && password) {
       var promise = userModel
         .findUserByCredentials(username, password);

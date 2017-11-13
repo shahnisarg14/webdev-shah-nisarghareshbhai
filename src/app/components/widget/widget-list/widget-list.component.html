@@ -71,7 +71,7 @@
           </div>
           <img class="nhs-image"
                [width]="widget.width"
-               [src]="widget.url"/>
+               [src]="widget.url | safe"/>
         </div>
       </div>
 
@@ -91,6 +91,29 @@
         </div>
       </div>
 
+      <div *ngSwitchCase="'TEXT'">
+        <div class="nhs-widget">
+          <div class="nhs-toolbar">
+            <a (click)="updateWidget(widget._id)">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+            <a>
+              <span class="glyphicon glyphicon-menu-hamburger"></span>
+            </a>
+          </div>
+        <div *ngIf="widget.formatted">
+          <quill-editor [(ngModel)]="widget.text" name="text"></quill-editor>
+        </div>
+
+        <input *ngIf="!widget.formatted && (!widget.rows || widget.rows===1)"
+               placeholder="{{widget.placeholder}}" class="form-control"/>
+
+        <textarea *ngIf="!widget.formatted && (widget.rows > 1)"
+                  rows="{{widget.rows}}" placeholder="{{widget.placeholder}}"
+                  class="form-control">{{widget.text}}</textarea>
+        </div>
+      </div>
+
       <div *ngSwitchCase="'YOUTUBE'">
         <div class="nhs-widget">
           <div class="nhs-transparent-toolbar">
@@ -101,7 +124,7 @@
               <span class="glyphicon glyphicon-menu-hamburger"></span>
             </a>
           </div>
-          <iframe class="nhs-frame"
+          <iframe class="nhs-frame" class="youtube-widget"
                   [src]="widget.url | safe">
           </iframe>
         </div>

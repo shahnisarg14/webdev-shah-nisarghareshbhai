@@ -32,6 +32,8 @@ module.exports = function(app){
           .findAllWebsitesForUser(userId)
           .then(function(websites) {
             res.json(websites);
+          }, function(error) {
+            console.log(error);
           });
       });
   }
@@ -53,7 +55,6 @@ module.exports = function(app){
   function updateWebsite(req, res){
     var websiteId = req.params['wid'];
     var newWebsite = req.body;
-
     websiteModel.updateWebsite(websiteId, newWebsite)
       .then(function (status) {
         res.send(status);

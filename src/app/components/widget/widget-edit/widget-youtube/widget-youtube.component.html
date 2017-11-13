@@ -1,3 +1,4 @@
+<div [hidden]="!editFlag">
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
 
@@ -21,6 +22,34 @@
 
   </div>
 </nav>
+</div>
+
+<div [hidden]="editFlag">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+
+      <div class="navbar-text pull-left">
+        <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+        </a>
+      </div>
+
+      <a class="navbar-brand">
+        <b class="colorWhite">Widget Edit</b>
+      </a>
+
+      <div class="navbar-text pull-right">
+        <a (click)="createYoutube(text, url, width)"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-ok colorWhite"></span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+</div>
+
 
 <div class="container-fluid">
 
@@ -71,7 +100,7 @@
            class="form-control"/>
   </div>
 
-  <a (click)="deleteYoutube(widgetId)"
+  <a (click)="deleteYoutube()"
      class="btn btn-danger btn-block">
     Delete
   </a>

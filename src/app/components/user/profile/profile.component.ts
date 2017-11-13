@@ -16,9 +16,10 @@ export class ProfileComponent implements OnInit {
   username: string;
   firstName: string;
   lastName: string;
+  email: string;
   user: User;
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private router: Router) {
+  constructor(private userService: UserService, private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -33,12 +34,13 @@ export class ProfileComponent implements OnInit {
           this.firstName = user.firstName;
           this.lastName = user.lastName;
           this.password = user.password;
+          this.email = user.email;
         });
     });
   }
 
-  update_user(userName, firstName, lastName) {
-    const user = new User(this.userId, userName, this.password, firstName, lastName);
+  update_user(userName, firstName, lastName, email) {
+    const user = new User(this.userId, userName, this.password, firstName, lastName, email);
     this.userService.updateUser(this.userId, user)
       .subscribe((user1) => {
       this.user = user1;

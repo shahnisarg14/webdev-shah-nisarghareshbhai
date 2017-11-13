@@ -24,11 +24,11 @@ export class WidgetService {
   };
 
   createWidget(pageId, widget) {
-    widget._id = (Math.floor((Math.random() * 2001) + 2000)).toString();
     widget.pageId = pageId;
     const url = this.baseUrl + '/api/page/' + pageId + '/widget';
     return this.http.post(url, widget)
       .map((response: Response) => {
+      console.log(response.json());
         return response.json();
       });
   }
@@ -52,7 +52,7 @@ export class WidgetService {
   updateWidget(widgetId, widget) {
     const url = this.baseUrl + '/api/widget/' + widgetId;
     const updatedWidget = new Widget(widgetId, widget.widgetType, widget.pageId, widget.size, widget.width,
-      widget.text, widget.url);
+      widget.text, widget.url, widget.rows, widget.placeholder, widget.formatted);
     return this.http.put(url, updatedWidget)
       .map((response: Response) => {
         return response.json();

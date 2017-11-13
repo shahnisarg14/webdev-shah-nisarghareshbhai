@@ -23,18 +23,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*register(username, password, verifyPassword) {
-    if (password === verifyPassword) {
-      const user = new User('', username, password, '', '');
-      this.userService.createUser(user).subscribe((user1) => {
-        this.user = user1;
-        this.router.navigate(['/login']);
-      });
-      } else {
-      this.errorFlag = true;
-    }
-  }*/
-
   register(username, password, verifyPassword) {
     this.userService.findUserByUsername(username)
       .subscribe((user1: User) => {
@@ -42,9 +30,10 @@ export class RegisterComponent implements OnInit {
           if (password === verifyPassword) {
             this.username = username;
             this.password = password;
-            const newUser = new User('', this.username, this.password, null, null);
+            const newUser = new User('', this.username, this.password, null, null, null);
             this.userService.createUser(newUser)
               .subscribe((user2) => {
+              console.log('I am here ' + user2);
                 this.router.navigate(['user/', user2._id]);
               });
           } else {

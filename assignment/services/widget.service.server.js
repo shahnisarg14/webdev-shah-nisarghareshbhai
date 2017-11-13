@@ -23,7 +23,7 @@ module.exports = function(app) {
   app.post("/api/upload", upload.single('myFile'), uploadImage);
 
   function createWidget(req, res) {
-    const pageId = request.params['pid'];
+    const pageId = req.params['pid'];
     const widget = req.body;
     widget.pageId = pageId;
     delete widget._id;
@@ -31,9 +31,9 @@ module.exports = function(app) {
       .createWidget(widget)
       .then(function (widget1) {
         widgetModel
-          .findWidgetsByPageId(pageId)
+          .findAllWidgetsForPage(pageId)
           .then(function (widgets) {
-            response.json(widgets);
+            res.json(widgets);
           }, function (error) {
             console.log(error);
           });
@@ -43,76 +43,76 @@ module.exports = function(app) {
   }
 
   function findAllWidgetsForPage(req, res) {
-    var pageId = request.params['pid'];
+    var pageId = req.params['pid'];
     widgetModel
-      .findWidgetsByPageId(pageId)
+      .findAllWidgetsForPage(pageId)
       .then(function(widgets) {
-        response.json(widgets);
+        res.json(widgets);
       }, function(error) {
         console.log(error);
       });
   }
   function findWidgetById(req, res) {
-    var widgetId = request.params['wgid'];
+    var widgetId = req.params['wgid'];
     widgetModel
       .findWidgetById(widgetId)
       .then(function(widget) {
-        response.json(widget);
+        res.json(widget);
       });
   }
   function updateWidget(req, res) {
-    var widgetId = request.params['wgid'];
-    var widget = request.body;
+    var widgetId = req.params['wgid'];
+    var widget = req.body;
     widgetModel
       .updateWidget(widgetId, widget)
       .then(function(status) {
-        response.send(status);
+        res.send(status);
       });
   }
   function deleteWidget(req, res) {
-    var pageId = request.params['pid'];
-    var widgetId = request.params['wgid'];
+    var pageId = req.params['pid'];
+    var widgetId = req.params['wgid'];
     widgetModel
       .deleteWidget(widgetId)
       .then(function(status) {
-        response.send(status);
+        res.send(status);
         widgetModel
-          .findWidgetsByPageId(pageId)
+          .findAllWidgetsForPage(pageId)
           .then(function(widgets) {
-            response.json(widgets);
+            res.json(widgets);
           }, function(error) {
             console.log(error);
           });
       });
   }
   function uploadImage(req, res) {
-    var widgetId      = req.body.widgetId;
-    var width         = req.body.width;
-    var myFile        = req.file;
-
+    var widgetId = req.body.widgetId;
+    var width = req.body.width;
+    var name = req.body.name;
+    var myFile = req.file;
+    var text = req.body.text;
     var userId = req.body.userId;
     var websiteId = req.body.websiteId;
     var pageId = req.body.pageId;
 
-    var originalname  = myFile.originalname; // file name on user's computer
-    var filename      = myFile.filename;     // new file name in upload folder
-    var path          = myFile.path;         // full path of uploaded file
-    var destination   = myFile.destination;  // folder where file is saved to
-    var size          = myFile.size;
-    var mimetype      = myFile.mimetype;
+    var filename = myFile.filename;
 
-    widget = getWidgetById(widgetId);
-    widget.url = '/assets/uploads/'+filename;
+    var widget = {
+      '_id': widgetId,
+      'widgetType': 'IMAGE',
+      'pageId': pageId,
+      'width': width,
+      'name': name,
+      'text': text
+    };
+    widget['url'] = '/assets/uploads/'+filename;
+    delete widget._id;
+    widgetModel
+      .createWidget(widget)
+      .then(function(newWidget) {
+      });
 
-    var callbackUrl   = "/user/"+userId+"/website/"+websiteId+ '/page/' + pageId + '/widget';
+    var callbackUrl = "/user/" + userId + "/website/" + websiteId + '/page/' + pageId + '/widget';
     res.redirect(callbackUrl);
-
-  }
-  function getWidgetById(widgetId) {
-    for (var x = 0; x < widgets.length; x++) {
-      if (widgets[x]._id === widgetId) {
-        return widgets[x];
-      }
-    }
   }
 };

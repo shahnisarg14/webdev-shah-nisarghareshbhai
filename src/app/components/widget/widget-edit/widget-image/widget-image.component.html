@@ -1,26 +1,54 @@
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
+<div [hidden]="!editFlag">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
 
-    <div class="navbar-text pull-left">
-      <a [routerLink]="['user/', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
-         class="navbar-link">
-        <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+      <div class="navbar-text pull-left">
+        <a [routerLink]="['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+        </a>
+      </div>
+
+      <a class="navbar-brand">
+        <b class="colorWhite">Widget Edit</b>
       </a>
+
+      <div class="navbar-text pull-right">
+        <a (click)="updateImage(text, width, url)"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-ok colorWhite"></span>
+        </a>
+      </div>
+
     </div>
+  </nav>
+</div>
 
-    <a class="navbar-brand">
-      <b class="colorWhite">Widget Edit</b>
-    </a>
+<div [hidden]="editFlag">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
 
-    <div class="navbar-text pull-right">
-      <a (click)="updateImage(text, width, url)"
-         class="navbar-link">
-        <span class="glyphicon glyphicon-ok colorWhite"></span>
+      <div class="navbar-text pull-left">
+        <a [routerLink]="['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-chevron-left colorWhite"></span>
+        </a>
+      </div>
+
+      <a class="navbar-brand">
+        <b class="colorWhite">Widget Edit</b>
       </a>
-    </div>
 
-  </div>
-</nav>
+      <div class="navbar-text pull-right">
+        <a (click)="createImage(text, width, url)"
+           class="navbar-link">
+          <span class="glyphicon glyphicon-ok colorWhite"></span>
+        </a>
+      </div>
+
+    </div>
+  </nav>
+</div>
 
 <div class="container-fluid">
 
@@ -86,7 +114,7 @@
       <br/>
     </form>
   </div>
-  <a (click)="deleteImage(widgetId)"
+  <a (click)="deleteImage()"
      class="btn btn-danger btn-block">
     Delete
   </a>
