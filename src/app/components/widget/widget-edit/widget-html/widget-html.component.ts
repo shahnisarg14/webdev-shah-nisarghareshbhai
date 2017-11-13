@@ -19,6 +19,8 @@ export class WidgetHtmlComponent implements OnInit {
   name: string
   editFlag: boolean;
   widgets: Widget[];
+  errorMsg: string;
+  errorFlag: boolean;
 
   constructor(private widgetService: WidgetService,
               private router: Router,
@@ -41,6 +43,11 @@ export class WidgetHtmlComponent implements OnInit {
       });
   }
   updateHTML(text, name) {
+    if ((text === undefined) || (text === null) || (text === '')) {
+      this.errorMsg = 'Text field should not be empty!';
+      this.errorFlag = true;
+      return;
+    }
     const updatedHTML = new Widget(this.widgetId, 'HTML', this.pageId, null, null, text, null, null, null, null);
     this.widgetService.updateWidget(this.widgetId, updatedHTML)
       .subscribe((widget) => {
@@ -51,6 +58,11 @@ export class WidgetHtmlComponent implements OnInit {
   }
 
   createHTML(text, name) {
+    if ((text === undefined) || (text === null) || (text === '')) {
+      this.errorMsg = 'Text field should not be empty!';
+      this.errorFlag = true;
+      return;
+    }
     const widget = new Widget('', 'HTML', this.pageId, null, null, text, null, null, null, null);
     this.widgetService
       .createWidget(this.pageId, widget)

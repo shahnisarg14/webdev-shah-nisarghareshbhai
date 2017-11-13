@@ -22,6 +22,8 @@ export class WidgetTextComponent implements OnInit {
   formatted: boolean;
   placeholder: string;
   rows: number;
+  errorMsg: string;
+  errorFlag: boolean;
 
   constructor(private widgetService: WidgetService,
               private router: Router,
@@ -44,6 +46,11 @@ export class WidgetTextComponent implements OnInit {
       });
   }
   updateText(rows, placeholder, text, formatted) {
+    if ((rows <= 1) || (rows == null) || (rows === '') ) {
+      this.errorMsg = 'Rows should be greater than 1!';
+      this.errorFlag = true;
+      return;
+    }
     const updatedHTML = new Widget(this.widgetId, 'TEXT', this.pageId, null, null, text, null, rows, placeholder, formatted);
     this.widgetService.updateWidget(this.widgetId, updatedHTML)
       .subscribe((widget) => {
@@ -52,8 +59,12 @@ export class WidgetTextComponent implements OnInit {
 
       });
   }
-
   createText(rows, placeholder, text, formatted) {
+    if ((rows <= 1) || (rows == null) || (rows === '') ) {
+      this.errorMsg = 'Rows should be greater than 1!';
+      this.errorFlag = true;
+      return;
+    }
     const widget = new Widget('', 'TEXT', this.pageId, null, null, text, null, rows, placeholder, formatted);
     this.widgetService
       .createWidget(this.pageId, widget)

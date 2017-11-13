@@ -69,6 +69,11 @@
     <quill-editor [(ngModel)]="text" name="text"></quill-editor>
   </div>
 
+  <div *ngIf="errorFlag"
+       class="alert alert-danger">
+    {{errorMsg}}
+  </div>
+
   <a (click)="deleteHTML()"
      class="btn btn-danger btn-block">
     Delete
