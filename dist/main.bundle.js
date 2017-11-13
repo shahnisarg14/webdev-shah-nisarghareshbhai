@@ -955,7 +955,6 @@ var RegisterComponent = (function () {
                     var newUser = new __WEBPACK_IMPORTED_MODULE_3__models_user_model_client__["a" /* User */]('', _this.username, _this.password, null, null, null);
                     _this.userService.createUser(newUser)
                         .subscribe(function (user2) {
-                        console.log('I am here ' + user2);
                         _this.router.navigate(['user/', user2._id]);
                     });
                 }
@@ -2615,7 +2614,6 @@ var WidgetService = (function () {
         var url = this.baseUrl + '/api/page/' + pageId + '/widget';
         return this.http.post(url, widget)
             .map(function (response) {
-            console.log(response.json());
             return response.json();
         });
     };

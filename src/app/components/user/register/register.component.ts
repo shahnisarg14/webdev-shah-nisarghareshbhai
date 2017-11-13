@@ -33,7 +33,6 @@ export class RegisterComponent implements OnInit {
             const newUser = new User('', this.username, this.password, null, null, null);
             this.userService.createUser(newUser)
               .subscribe((user2) => {
-              console.log('I am here ' + user2);
                 this.router.navigate(['user/', user2._id]);
               });
           } else {

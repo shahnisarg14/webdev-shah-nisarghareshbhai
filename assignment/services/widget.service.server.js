@@ -5,15 +5,6 @@ module.exports = function(app) {
   var widgetModel = require('../models/widget/widget.model.server');
   var multer = require('multer');
   var upload = multer({ dest:__dirname + '/../../dist/assets/uploads'});
-  var widgets = [
-    new Widget("123", "HEADING", "321", 2, "null", "GIZMODO", "null"),
-    new Widget("234", "HEADING", "321", 4, "null", "Lorem ipsum", "null"),
-    new Widget("345", "IMAGE", "321", "null", "100%", "null", "http://lorempixel.com/400/200/"),
-    new Widget("456", "HTML", "321", "null", "null", "<p>Lorem ipsum</p>", "null"),
-    new Widget("567", "HEADING", "321", 4, "null", "Lorem ipsum", "null"),
-    new Widget("678", "YOUTUBE", "321", "null", "100%", "null", "https://www.youtube.com/embed/gWhqLVkjK50"),
-    new Widget("789", "HTML", "321", "null", "null", "<p>Lorem ipsum</p>", "null")
-  ];
 
   app.post("/api/page/:pid/widget", createWidget);
   app.get("/api/page/:pid/widget", findAllWidgetsForPage);

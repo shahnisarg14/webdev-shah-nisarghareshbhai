@@ -4,13 +4,6 @@ module.exports=function (app) {
 
   var userModel = require('../models/user/user.model.server');
 
-  var users = [
-    new User("123", "alice", "alice", "Alice", "Wonder"),
-    new User("234", "bob", "bob", "Bob", "Marley"),
-    new User("345", "charly", "charly", "Charly", "Garcia"),
-    new User("456", "jannunzi", "jannunzi", "Jose", "Annunzi")
-  ];
-
   app.post("/api/user", createUser);
   app.put("/api/user/:userId", updateUser);
   app.delete("/api/user/:userId", deleteUser);

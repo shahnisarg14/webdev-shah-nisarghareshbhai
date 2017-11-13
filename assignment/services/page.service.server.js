@@ -4,12 +4,6 @@ module.exports = function(app) {
 
   var pageModel = require('../models/page/page.model.server');
 
-  var pages = [
-    new Page("321", "Post 1", "456", "Lorem"),
-    new Page("432", "Post 2", "456", "Lorem"),
-    new Page("543", "Post 3", "456", "Lorem")
-  ];
-
   app.post("/api/website/:wid/page", createPage);
   app.get("/api/website/:wid/page", findAllPagesForWebsite);
   app.get("/api/page/:pid", findPageById);
