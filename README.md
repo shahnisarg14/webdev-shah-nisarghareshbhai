@@ -1,13 +1,13 @@
 # About me
 
-I am a graduate student at Northeastern University. 
+Hello! I am a graduate student at Northeastern University. 
 
 ### Work Experience  
 
 Bhaskaracharya Institute of Space Application and Geo-Informatics, India
 Trainee
-* Developed solutions for Android applications by analyzing user requirements and evaluating problem definition
-* Formulated and implemented test strategies for application software
+* Contributed software engineering expertise in the development of products through software development life cycle, from analyzing user requirements to preparing detailed reports concerning project specifications and activities
+* Formulated test strategies and implemented unit testing for application software, using JUnit4 framework
 
 
 ### Projects
