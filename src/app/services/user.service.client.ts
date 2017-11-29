@@ -10,9 +10,9 @@ import { User } from '../models/user.model.client';
 @Injectable()
 
 export class UserService {
-
   constructor(private http: Http) {
   }
+  options: RequestOptions = new RequestOptions();
   baseUrl = environment.baseUrl;
   api = {
     'createUser'   : this.createUser,

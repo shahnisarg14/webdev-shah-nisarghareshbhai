@@ -31,6 +31,7 @@ import {WidgetYoutubeComponent} from './components/widget/widget-edit/widget-you
 import { QuillEditorModule } from 'ngx-quill-editor';
 import { WidgetHtmlComponent } from './components/widget/widget-edit/widget-html/widget-html.component';
 import { WidgetTextComponent } from './components/widget/widget-edit/widget-text/widget-text.component';
+import {SharedService} from './services/shared.service.client';
 
 @NgModule({
   // Declare components here
@@ -65,7 +66,13 @@ import { WidgetTextComponent } from './components/widget/widget-edit/widget-text
     QuillEditorModule
   ],
   // Client Side services here
-  providers: [TestService, UserService, WebsiteService, PageService, WidgetService],
+  providers: [
+    TestService,
+    UserService,
+    WebsiteService,
+    PageService,
+    WidgetService,
+    SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
