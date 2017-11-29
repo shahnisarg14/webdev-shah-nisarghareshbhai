@@ -10,6 +10,23 @@ module.exports=function (app) {
   app.get("/api/user", findUsers);
   app.get("/api/user/:uid",findUserById);
 
+  app.post('/api/register', register);
+
+  var passport  = require('passport');
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+
+  function register(req, res) {
+    var user = req.body;
+    userModel
+      .createUser(user)
+      .then(function(user){
+        req.login(user, function(err) {
+          res.json(user);
+        });
+      });
+  }
+
   function createUser(req, res){
     var newUser = req.body;
     delete newUser._id;
@@ -75,6 +92,24 @@ module.exports=function (app) {
       res.json(user)
     });
   }
+
+  function serializeUser(user, done) {
+    done(null, user);
+  }
+
+  function deserializeUser(user, done) {
+    userModel
+      .findUserById(user._id)
+      .then(
+        function(user){
+          done(null, user);
+        },
+        function(err){
+          done(err, null);
+        }
+      );
+  }
+
 
 };
 
