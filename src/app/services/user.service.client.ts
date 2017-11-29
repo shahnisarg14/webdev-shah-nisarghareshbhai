@@ -36,7 +36,20 @@ export class UserService {
       });
   }
 
-    createUser(user: User) {
+  login(username, password) {
+    const url = 'http://localhost:3100/api/login';
+    const credentials = {
+      username: username,
+      password: password
+    };
+    this.options.withCredentials = true;
+    return this.http.post(url, credentials, this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+  createUser(user: User) {
     const url = this.baseUrl + '/api/user/';
     return this.http.post(url, user)
       .map((response: Response) => {
