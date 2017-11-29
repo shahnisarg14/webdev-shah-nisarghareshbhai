@@ -11,10 +11,28 @@ module.exports=function (app) {
   app.get("/api/user/:uid",findUserById);
 
   app.post('/api/register', register);
+  app.post('/api/login', passport.authenticate('local'), login);
 
   var passport  = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
+  passport.use(new LocalStrategy(localStrategy));
+
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
+
+  function localStrategy(usr, pass, done) {
+    userModel
+      .findUserByCredentials(usr, pass)
+      .then(
+        function(user) {
+          if(user.username === usr && user.password === pass) {
+            return done(null, user);
+          } else {
+            return done(null, false);
+          }
+        }
+      );
+  }
 
   function register(req, res) {
     var user = req.body;
@@ -25,6 +43,10 @@ module.exports=function (app) {
           res.json(user);
         });
       });
+  }
+
+  function login(req, res) {
+    res.json(req.user);
   }
 
   function createUser(req, res){
