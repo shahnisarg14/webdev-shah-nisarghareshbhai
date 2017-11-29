@@ -23,7 +23,20 @@ export class UserService {
     'deleteUser' : this.deleteUser
   };
 
-  createUser(user: User) {
+  register(username, password) {
+    const url = 'http://localhost:3100/api/register';
+    const credentials = {
+      username: username,
+      password: password
+    };
+    this.options.withCredentials = true;
+    return this.http.post(url, credentials, this.options)
+      .map((response: Response) => {
+        return response.json();
+      });
+  }
+
+    createUser(user: User) {
     const url = this.baseUrl + '/api/user/';
     return this.http.post(url, user)
       .map((response: Response) => {
