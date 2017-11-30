@@ -3,6 +3,8 @@ var User = require("../models/user/user.model.server");
 module.exports=function (app) {
 
   var userModel = require('../models/user/user.model.server');
+  var passport  = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
 
   app.post("/api/user", createUser);
   app.put("/api/user/:userId", updateUser);
@@ -13,8 +15,6 @@ module.exports=function (app) {
   app.post('/api/register', register);
   app.post('/api/login', passport.authenticate('local'), login);
 
-  var passport  = require('passport');
-  var LocalStrategy = require('passport-local').Strategy;
   passport.use(new LocalStrategy(localStrategy));
 
   passport.serializeUser(serializeUser);

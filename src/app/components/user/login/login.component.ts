@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       .subscribe((user) => {
         if (user) {
           this.sharedService.user = user;
-          this.router.navigate(['/profile']);
+          this.router.navigate(['/user']);
         } else {
           this.errorFlag = true;
         }
