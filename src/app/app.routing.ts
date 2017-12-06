@@ -24,13 +24,14 @@ import {WidgetHeaderComponent} from './components/widget/widget-edit/widget-head
 import {WidgetImageComponent} from './components/widget/widget-edit/widget-image/widget-image.component';
 import {WidgetYoutubeComponent} from './components/widget/widget-edit/widget-youtube/widget-youtube.component';
 import {WidgetTextComponent} from './components/widget/widget-edit/widget-text/widget-text.component';
+import {AuthGuard} from './services/auth-guard.service';
 
 const APP_ROUTES: Routes = [
   {path: '', component : HomeComponent},
   {path: 'test', component: TestComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'user', component: ProfileComponent},
+  {path: 'user', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'user/:uid', component: ProfileComponent},
   {path: 'user/:uid/website', component: WebsiteListComponent},
   {path: 'user/:uid/website/new', component: WebsiteNewComponent},

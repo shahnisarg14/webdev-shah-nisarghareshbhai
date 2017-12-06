@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {UserService} from '../../../services/user.service.client';
 import {User} from '../../../models/user.model.client';
 import {first} from 'rxjs/operator/first';
+import {SharedService} from "../../../services/shared.service.client";
 
 @Component({
   selector: 'app-profile',
@@ -17,9 +18,12 @@ export class ProfileComponent implements OnInit {
   firstName: string;
   lastName: string;
   email: string;
-  user: User;
-
-  constructor(private userService: UserService, private route: ActivatedRoute) {
+  // user: User;
+  user = {};
+  constructor(private sharedService: SharedService,
+              private userService: UserService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -27,7 +31,8 @@ export class ProfileComponent implements OnInit {
   }
   getUser() {
     this.route.params.subscribe(params => {
-      this.userId = params['uid'];
+      this.user = this.sharedService.user || {};
+      this.userId = this.user['_id'];
       this.userService.findUserById(this.userId)
         .subscribe((user) => {
           this.username = user.username;
@@ -45,5 +50,12 @@ export class ProfileComponent implements OnInit {
       .subscribe((user1) => {
       this.user = user1;
     });
+  }
+
+  logout() {
+    this.userService.logout()
+      .subscribe((status) => {
+        this.router.navigate(['/login']);
+      });
   }
 }

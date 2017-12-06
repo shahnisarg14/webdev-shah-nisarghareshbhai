@@ -5,12 +5,15 @@ import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 import { forEach } from '@angular/router/src/utils/collection';
 import { User } from '../models/user.model.client';
+import {SharedService} from './shared.service.client';
 
 // injecting service into module
 @Injectable()
 
 export class UserService {
-  constructor(private http: Http) {
+  constructor(private http: Http,
+              private sharedService: SharedService,
+              private router: Router) {
   }
   options: RequestOptions = new RequestOptions();
   baseUrl = environment.baseUrl;
@@ -48,6 +51,32 @@ export class UserService {
         return response.json();
       });
   }
+
+  logout() {
+    const url = 'http://localhost:3100/api/logout';
+    this.options.withCredentials = true;
+    return this.http.post(url, '', this.options)
+      .map((status) => {
+        return status;
+      });
+  }
+
+  loggedIn() {
+    const url = 'http://localhost:3100/api/loggedIn';
+    this.options.withCredentials = true;
+    return this.http.post(url, '', this.options)
+      .map((res: Response) => {
+        const user = res.json();
+        if (user !== 0) {
+          this.sharedService.user = user;
+          return true;
+        } else {
+          this.router.navigate(['/login']);
+          return false;
+        }
+      });
+  }
+
 
   createUser(user: User) {
     const url = this.baseUrl + '/api/user/';
