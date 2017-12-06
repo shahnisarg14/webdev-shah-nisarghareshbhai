@@ -6,6 +6,13 @@ module.exports=function (app) {
   var passport  = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
   var bcrypt = require("bcrypt-nodejs");
+  var FacebookStrategy = require('passport-facebook').Strategy;
+  var facebookConfig = {
+    clientID     : process.env.FACEBOOK_CLIENT_ID,
+    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+    callbackURL  : process.env.FACEBOOK_CALLBACK_URL
+  };
+
 
   app.post("/api/user", createUser);
   app.put("/api/user/:userId", updateUser);
@@ -17,10 +24,17 @@ module.exports=function (app) {
   app.post('/api/login', passport.authenticate('local'), login);
   app.post('/api/logout', logout);
   app.post('/api/loggedIn', loggedIn);
-
+  app.get ('/facebook/login',
+    passport.authenticate('facebook', { scope : 'email' }));
+  app.get ('/facebook/oauth2callback',
+    passport.authenticate('facebook', {
+      successRedirect: '/user',
+      failureRedirect: '/login'
+    }));
 
   passport.use(new LocalStrategy(localStrategy));
-
+  passport.use(
+    new FacebookStrategy(facebookConfig, facebookStrategy));
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
 
@@ -37,6 +51,29 @@ module.exports=function (app) {
         }
       );
   }
+
+  function facebookStrategy(token, refreshToken, profile, done) {
+    userModel
+      .findUserByFacebookId(profile.id)
+      .then(function(user) {
+        if(user) { return done(null, user); } // already in db
+        else { // if not, insert into db using profile info
+          var names = profile.displayName.split(" ");
+          var newFacebookUser = { lastName:  names[1],
+            firstName: names[0],
+            email:     profile.emails ? profile.emails[0].value:"",
+            facebook: { id:    profile.id, token: token }
+          };
+          return userModel.createUser(newFacebookUser);
+        }
+      })
+      .then(
+        function(user){
+          return done(null, user);
+        }
+      );
+  }
+
 
   function register(req, res) {
     var user = req.body;
