@@ -32,6 +32,7 @@ import { QuillEditorModule } from 'ngx-quill-editor';
 import { WidgetHtmlComponent } from './components/widget/widget-edit/widget-html/widget-html.component';
 import { WidgetTextComponent } from './components/widget/widget-edit/widget-text/widget-text.component';
 import {SharedService} from './services/shared.service.client';
+import {AuthGuard} from "./services/auth-guard.service";
 
 @NgModule({
   // Declare components here
@@ -72,7 +73,8 @@ import {SharedService} from './services/shared.service.client';
     WebsiteService,
     PageService,
     WidgetService,
-    SharedService],
+    SharedService,
+    AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
