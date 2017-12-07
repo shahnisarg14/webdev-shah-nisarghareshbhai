@@ -36,7 +36,7 @@ export class WebsiteNewComponent implements OnInit {
   }
 
   createWebsite(name, description) {
-    if ((name === undefined) || (name === '')) {
+    if ((name === undefined) || (name === '') || (name === null)) {
       this.errorFlag = true;
       return;
     }

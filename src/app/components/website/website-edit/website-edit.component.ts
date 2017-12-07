@@ -16,6 +16,8 @@ export class WebsiteEditComponent implements OnInit {
   name: string;
   description: string;
   websites: Website[];
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
 
   constructor(private websiteService: WebsiteService,
               private route: ActivatedRoute,
@@ -44,6 +46,10 @@ export class WebsiteEditComponent implements OnInit {
   }
 
   updateWebsite(name, description) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const website = new Website(this.websiteId, name, this.userId, description);
     this.websiteService.updateWebsite(this.websiteId, website)
       .subscribe((website1) => {

@@ -72,6 +72,10 @@
                 rows="5"
                 id="websitedescription"
                 class="form-control">Blogger is a blog-publishing service that allows multi-user blogs with time-stamped entries. It was develloped by Pyra Labs, which was bought by Google in 2003.</textarea>
+      <div *ngIf="errorFlag"
+           class="alert alert-danger">
+        {{errorMsg}}
+      </div>
       <a (click)="deleteWebsite()"
          class="btn btn-danger btn-block">
         Delete
