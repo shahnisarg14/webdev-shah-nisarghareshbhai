@@ -1806,7 +1806,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"form-group\">\n    <label>Search Image</label>\n    <input [(ngModel)]=\"searchText\" type=\"text\" class=\"form-control\">\n    <span class=\"input-group-btn\">\n         <a (click)=\"searchPhotos()\" class=\"btn btn-default\" type=\"button\">\n             <span class=\"glyphicon glyphicon-search\"></span>\n         </a>\n    </span>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n\n  <div class=\"form-group\">\n    <label>Search Image</label>\n    <input [(ngModel)]=\"searchText\" type=\"text\" class=\"form-control\">\n    <span class=\"input-group-btn\">\n         <a (click)=\"searchPhotos()\" class=\"btn btn-default\" type=\"button\">\n             <span class=\"glyphicon glyphicon-search\"></span>\n         </a>\n    </span>\n  </div>\n\n  <div class=\"row\">\n    <div *ngFor = \"let pic of photos['photo']\"\n         class=\"col-xs-4\">\n      <img    (click)=\"selectPhoto(pic)\"\n              width=\"100%\"\n              [src] = \"['https://farm' + pic.farm + '.staticflickr.com/' + pic.server + '/' +   pic.id + '_' + pic.secret + '_s.jpg']\"/>\n\n      <p></p>\n    </div>\n  </div>\n\n</div>\n"
 
 /***/ }),
 
@@ -1817,6 +1817,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"form-group\">\
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FlickrImageSearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__ = __webpack_require__("../../../../../src/app/services/flickr.service.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1828,12 +1829,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
+
 var FlickrImageSearchComponent = (function () {
-    function FlickrImageSearchComponent(flickrService) {
+    function FlickrImageSearchComponent(flickrService, activatedRoutes) {
         this.flickrService = flickrService;
+        this.activatedRoutes = activatedRoutes;
         this.photos = [];
     }
     FlickrImageSearchComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.activatedRoutes.params.subscribe(function (params) {
+            _this.userId = params['uid'];
+            _this.websiteId = params['wid'];
+            _this.pageId = params['pid'];
+        });
     };
     FlickrImageSearchComponent.prototype.searchPhotos = function () {
         var _this = this;
@@ -1849,6 +1858,15 @@ var FlickrImageSearchComponent = (function () {
             _this.photos = val.photos;
         });
     };
+    FlickrImageSearchComponent.prototype.selectPhoto = function (photo) {
+        var url = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server;
+        url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
+        var widget = {
+            websiteId: this.websiteId,
+            pageId: this.pageId,
+            url: url
+        };
+    };
     return FlickrImageSearchComponent;
 }());
 FlickrImageSearchComponent = __decorate([
@@ -1857,10 +1875,10 @@ FlickrImageSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
 ], FlickrImageSearchComponent);
 
-var _a;
+var _a, _b;
 //# sourceMappingURL=flickr-image-search.component.js.map
 
 /***/ }),

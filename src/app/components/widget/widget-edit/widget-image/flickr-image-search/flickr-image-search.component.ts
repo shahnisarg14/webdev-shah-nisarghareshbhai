@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FlickrService} from '../../../../../services/flickr.service.client';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-flickr-image-search',
@@ -10,9 +11,20 @@ export class FlickrImageSearchComponent implements OnInit {
 
   searchText: string;
   photos = [];
-  constructor(private flickrService: FlickrService) { }
+  userId: string;
+  websiteId: string;
+  pageId: string;
+
+  constructor(private flickrService: FlickrService,
+              private activatedRoutes: ActivatedRoute) {
+  }
 
   ngOnInit() {
+    this.activatedRoutes.params.subscribe(params => {
+      this.userId = params['uid'];
+      this.websiteId = params['wid'];
+      this.pageId = params['pid'];
+    });
   }
 
   searchPhotos() {
@@ -31,4 +43,13 @@ export class FlickrImageSearchComponent implements OnInit {
       );
   }
 
+  selectPhoto(photo) {
+    let url = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server;
+    url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
+    const widget = {
+      websiteId: this.websiteId,
+      pageId: this.pageId,
+      url: url
+    };
+  }
 }
