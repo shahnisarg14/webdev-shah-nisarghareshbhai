@@ -116,15 +116,10 @@
     </form>
   </div>
 
-  <div class="form-group">
-    <input type="text" class="form-control">
-    <span class="input-group-btn">
-         <a class="btn btn-default" type="button">
-             <span class="glyphicon glyphicon-search"></span>
-         </a>
- </span>
-  </div>
-
+  <a class="btn btn-info btn-block"
+     [routerLink]="['/user/',userId,'website',websiteId,'page',pageId,'widget','new','image','search']">
+    Search Images
+  </a>
 
   <a (click)="deleteImage()"
      class="btn btn-danger btn-block">
