@@ -1803,7 +1803,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"form-group\">\n  <label>Search Image</label>\n  <input type=\"text\" class=\"form-control\">\n  <span class=\"input-group-btn\">\n         <a class=\"btn btn-default btn-block\" type=\"button\">\n             <span class=\"glyphicon glyphicon-search\"></span>\n         </a>\n    </span>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"form-group\">\n    <label>Search Image</label>\n    <input [(ngModel)]=\"searchText\" type=\"text\" class=\"form-control\">\n    <span class=\"input-group-btn\">\n         <a (click)=\"searchPhotos()\" class=\"btn btn-default\" type=\"button\">\n             <span class=\"glyphicon glyphicon-search\"></span>\n         </a>\n    </span>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1813,6 +1813,7 @@ module.exports = "<div class=\"form-group\">\n  <label>Search Image</label>\n  <
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FlickrImageSearchComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__ = __webpack_require__("../../../../../src/app/services/flickr.service.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1823,10 +1824,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var FlickrImageSearchComponent = (function () {
-    function FlickrImageSearchComponent() {
+    function FlickrImageSearchComponent(flickrService) {
+        this.flickrService = flickrService;
+        this.photos = [];
     }
     FlickrImageSearchComponent.prototype.ngOnInit = function () {
+    };
+    FlickrImageSearchComponent.prototype.searchPhotos = function () {
+        var _this = this;
+        this.flickrService
+            .searchPhotos(this.searchText)
+            .subscribe(function (data) {
+            console.log(data);
+            var val = data._body;
+            val = val.replace('jsonFlickrApi(', '');
+            val = val.substring(0, val.length - 1);
+            val = JSON.parse(val);
+            console.log(val);
+            _this.photos = val.photos;
+        });
     };
     return FlickrImageSearchComponent;
 }());
@@ -1836,9 +1854,10 @@ FlickrImageSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */]) === "function" && _a || Object])
 ], FlickrImageSearchComponent);
 
+var _a;
 //# sourceMappingURL=flickr-image-search.component.js.map
 
 /***/ }),
@@ -1864,7 +1883,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/components/widget/widget-edit/widget-image/widget-image.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div [hidden]=\"!editFlag\">\r\n  <nav class=\"navbar navbar-default navbar-fixed-top\">\r\n    <div class=\"container-fluid\">\r\n\r\n      <div class=\"navbar-text pull-left\">\r\n        <a [routerLink]=\"['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n      <a class=\"navbar-brand\">\r\n        <b class=\"colorWhite\">Widget Edit</b>\r\n      </a>\r\n\r\n      <div class=\"navbar-text pull-right\">\r\n        <a (click)=\"updateImage(text, width, url, name)\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n    </div>\r\n  </nav>\r\n</div>\r\n\r\n<div [hidden]=\"editFlag\">\r\n  <nav class=\"navbar navbar-default navbar-fixed-top\">\r\n    <div class=\"container-fluid\">\r\n\r\n      <div class=\"navbar-text pull-left\">\r\n        <a [routerLink]=\"['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n      <a class=\"navbar-brand\">\r\n        <b class=\"colorWhite\">Widget Edit</b>\r\n      </a>\r\n\r\n      <div class=\"navbar-text pull-right\">\r\n        <a (click)=\"createImage(text, width, url, name)\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n    </div>\r\n  </nav>\r\n</div>\r\n\r\n<div class=\"container-fluid\">\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"name\">\r\n      Name\r\n    </label>\r\n    <input [(ngModel)]=\"name\"\r\n           value=\"Lorem pixel\"\r\n           placeholder=\"Name of image\"\r\n           type=\"text\"\r\n           id=\"name\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"text\">\r\n      Text\r\n    </label>\r\n    <input [(ngModel)]=\"text\"\r\n           value=\"You can find images on Lorem pixel\"\r\n           placeholder=\"Text for image\"\r\n           type=\"text\"\r\n           id=\"text\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"url\">\r\n      URL\r\n    </label>\r\n    <input [(ngModel)]=\"url\"\r\n           value=\"http://lorempixel.com/\"\r\n           placeholder=\"http://lorempixel.com/\"\r\n           type=\"url\"\r\n           id=\"url\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"width\">\r\n      Width\r\n    </label>\r\n    <input [(ngModel)]=\"width\"\r\n           value=\"100%\"\r\n           placeholder=\"100%\"\r\n           type=\"text\"\r\n           id=\"width\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label>\r\n      Upload\r\n    </label>\r\n    <form ngNoForm action=\"{{baseUrl}}/api/upload\" method=\"post\" enctype=\"multipart/form-data\">\r\n      <input  name=\"myFile\"   type=\"file\" class=\"form-control\"/>\r\n      <input  name=\"widgetId\" value=\"{{widgetId}}\"   style=\"display: none\"/>\r\n      <input  name=\"websiteId\" value=\"{{websiteId}}\"   style=\"display: none\"/>\r\n      <input  name=\"pageId\" value=\"{{pageId}}\"   style=\"display: none\"/>\r\n      <input  name=\"userId\" value=\"{{userId}}\"   style=\"display: none\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary btn-block\"\r\n              (click)=\"updateImage(text, width, url)\">Upload Image</button>\r\n      <br/>\r\n    </form>\r\n  </div>\r\n\r\n  <a class=\"btn btn-info btn-block\" href=\"#\"\r\n     [routerLink]=\"['/user/',userId,'website',websiteId,'page',pageId,'widget','new','image','search']\">\r\n    Search Images\r\n  </a>\r\n\r\n  <a (click)=\"deleteImage()\"\r\n     class=\"btn btn-danger btn-block\">\r\n    Delete\r\n  </a>\r\n  <div *ngIf=\"errorFlag\"\r\n       class=\"alert alert-danger\">\r\n    {{errorMsg}}\r\n  </div>\r\n\r\n</div>\r\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\r\n  <div class=\"container-fluid\">\r\n\r\n    <div class=\"navbar-text pull-right\">\r\n      <a [routerLink]=\"['/user', userId]\"\r\n         class=\"navbar-link\">\r\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\r\n      </a>\r\n    </div>\r\n\r\n  </div>\r\n</nav>\r\n"
+module.exports = "<div [hidden]=\"!editFlag\">\r\n  <nav class=\"navbar navbar-default navbar-fixed-top\">\r\n    <div class=\"container-fluid\">\r\n\r\n      <div class=\"navbar-text pull-left\">\r\n        <a [routerLink]=\"['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n      <a class=\"navbar-brand\">\r\n        <b class=\"colorWhite\">Widget Edit</b>\r\n      </a>\r\n\r\n      <div class=\"navbar-text pull-right\">\r\n        <a (click)=\"updateImage(text, width, url, name)\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n    </div>\r\n  </nav>\r\n</div>\r\n\r\n<div [hidden]=\"editFlag\">\r\n  <nav class=\"navbar navbar-default navbar-fixed-top\">\r\n    <div class=\"container-fluid\">\r\n\r\n      <div class=\"navbar-text pull-left\">\r\n        <a [routerLink]=\"['/user', this.userId, 'website', this.websiteId, 'page', this.pageId, 'widget']\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-chevron-left colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n      <a class=\"navbar-brand\">\r\n        <b class=\"colorWhite\">Widget Edit</b>\r\n      </a>\r\n\r\n      <div class=\"navbar-text pull-right\">\r\n        <a (click)=\"createImage(text, width, url, name)\"\r\n           class=\"navbar-link\">\r\n          <span class=\"glyphicon glyphicon-ok colorWhite\"></span>\r\n        </a>\r\n      </div>\r\n\r\n    </div>\r\n  </nav>\r\n</div>\r\n\r\n<div class=\"container-fluid\">\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"name\">\r\n      Name\r\n    </label>\r\n    <input [(ngModel)]=\"name\"\r\n           value=\"Lorem pixel\"\r\n           placeholder=\"Name of image\"\r\n           type=\"text\"\r\n           id=\"name\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"text\">\r\n      Text\r\n    </label>\r\n    <input [(ngModel)]=\"text\"\r\n           value=\"You can find images on Lorem pixel\"\r\n           placeholder=\"Text for image\"\r\n           type=\"text\"\r\n           id=\"text\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"url\">\r\n      URL\r\n    </label>\r\n    <input [(ngModel)]=\"url\"\r\n           value=\"http://lorempixel.com/\"\r\n           placeholder=\"http://lorempixel.com/\"\r\n           type=\"url\"\r\n           id=\"url\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label for=\"width\">\r\n      Width\r\n    </label>\r\n    <input [(ngModel)]=\"width\"\r\n           value=\"100%\"\r\n           placeholder=\"100%\"\r\n           type=\"text\"\r\n           id=\"width\"\r\n           class=\"form-control\"/>\r\n  </div>\r\n\r\n  <div class=\"form-group\">\r\n    <label>\r\n      Upload\r\n    </label>\r\n    <form ngNoForm action=\"{{baseUrl}}/api/upload\" method=\"post\" enctype=\"multipart/form-data\">\r\n      <input  name=\"myFile\"   type=\"file\" class=\"form-control\"/>\r\n      <input  name=\"widgetId\" value=\"{{widgetId}}\"   style=\"display: none\"/>\r\n      <input  name=\"websiteId\" value=\"{{websiteId}}\"   style=\"display: none\"/>\r\n      <input  name=\"pageId\" value=\"{{pageId}}\"   style=\"display: none\"/>\r\n      <input  name=\"userId\" value=\"{{userId}}\"   style=\"display: none\"/>\r\n      <button type=\"submit\" class=\"btn btn-primary btn-block\"\r\n              (click)=\"updateImage(text, width, url)\">Upload Image</button>\r\n      <br/>\r\n    </form>\r\n  </div>\r\n\r\n  <a class=\"btn btn-info btn-block\"\r\n     [routerLink]=\"['/user/',userId,'website',websiteId,'page',pageId,'widget','new','image','search']\">\r\n    Search Images\r\n  </a>\r\n\r\n  <a (click)=\"deleteImage()\"\r\n     class=\"btn btn-danger btn-block\">\r\n    Delete\r\n  </a>\r\n  <div *ngIf=\"errorFlag\"\r\n       class=\"alert alert-danger\">\r\n    {{errorMsg}}\r\n  </div>\r\n\r\n</div>\r\n<nav class=\"navbar navbar-default navbar-fixed-bottom\">\r\n  <div class=\"container-fluid\">\r\n\r\n    <div class=\"navbar-text pull-right\">\r\n      <a [routerLink]=\"['/user', userId]\"\r\n         class=\"navbar-link\">\r\n        <span class=\"glyphicon glyphicon-user colorWhite\"></span>\r\n      </a>\r\n    </div>\r\n\r\n  </div>\r\n</nav>\r\n"
 
 /***/ }),
 
@@ -2446,6 +2465,51 @@ AuthGuard = __decorate([
 
 var _a, _b;
 //# sourceMappingURL=auth-guard.service.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/services/flickr.service.client.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return FlickrService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_rxjs_Rx__ = __webpack_require__("../../../../rxjs/_esm5/Rx.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+// injecting service into module
+var FlickrService = (function () {
+    function FlickrService(_http) {
+        this._http = _http;
+        this.key = 'e2d94f3a46602f6e79f15e6a43739d70';
+        this.urlBase = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=API_KEY&text=TEXT';
+    }
+    FlickrService.prototype.searchPhotos = function (searchTerm) {
+        var url = this.urlBase
+            .replace('API_KEY', this.key)
+            .replace('TEXT', searchTerm);
+        return this._http.get(url);
+    };
+    return FlickrService;
+}());
+FlickrService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["C" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_http__["a" /* Http */]) === "function" && _a || Object])
+], FlickrService);
+
+var _a;
+//# sourceMappingURL=flickr.service.client.js.map
 
 /***/ }),
 

@@ -1,9 +1,11 @@
-<div class="form-group">
-  <label>Search Image</label>
-  <input type="text" class="form-control">
-  <span class="input-group-btn">
-         <a class="btn btn-default btn-block" type="button">
+<div class="container-fluid">
+  <div class="form-group">
+    <label>Search Image</label>
+    <input [(ngModel)]="searchText" type="text" class="form-control">
+    <span class="input-group-btn">
+         <a (click)="searchPhotos()" class="btn btn-default" type="button">
              <span class="glyphicon glyphicon-search"></span>
          </a>
     </span>
+  </div>
 </div>

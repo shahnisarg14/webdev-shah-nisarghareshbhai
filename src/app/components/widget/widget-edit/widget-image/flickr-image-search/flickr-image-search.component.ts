@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FlickrService} from '../../../../../services/flickr.service.client';
 
 @Component({
   selector: 'app-flickr-image-search',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FlickrImageSearchComponent implements OnInit {
 
-  constructor() { }
+  searchText: string;
+  photos = [];
+  constructor(private flickrService: FlickrService) { }
 
   ngOnInit() {
+  }
+
+  searchPhotos() {
+    this.flickrService
+      .searchPhotos(this.searchText)
+      .subscribe(
+        (data: any) => {
+          console.log(data);
+          let val = data._body;
+          val = val.replace('jsonFlickrApi(', '');
+          val = val.substring(0, val.length - 1);
+          val = JSON.parse(val);
+          console.log(val);
+          this.photos = val.photos;
+        }
+      );
   }
 
 }
