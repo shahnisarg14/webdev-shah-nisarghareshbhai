@@ -46,6 +46,11 @@ export class WidgetTextComponent implements OnInit {
       });
   }
   updateText(rows, placeholder, text, formatted) {
+    if ((text === undefined) || (text === '') || (text === null)) {
+      this.errorMsg = 'Text field should not be empty!'
+      this.errorFlag = true;
+      return;
+    }
     if ((rows <= 1) || (rows == null) || (rows === '') ) {
       this.errorMsg = 'Rows should be greater than 1!';
       this.errorFlag = true;
@@ -60,6 +65,11 @@ export class WidgetTextComponent implements OnInit {
       });
   }
   createText(rows, placeholder, text, formatted) {
+    if ((text === undefined) || (text === '') || (text === null)) {
+      this.errorMsg = 'Text field should not be empty!'
+      this.errorFlag = true;
+      return;
+    }
     if ((rows <= 1) || (rows == null) || (rows === '') ) {
       this.errorMsg = 'Rows should be greater than 1!';
       this.errorFlag = true;

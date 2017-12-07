@@ -78,14 +78,12 @@
       <label><input [(ngModel)] = "formatted" type="checkbox" value=""/><b>Formatted</b></label>
     </div>
 
+    <a class="btn btn-danger btn-block"
+       (click)="deleteText()">Delete</a>
     <div *ngIf="errorFlag"
          class="alert alert-danger">
       {{errorMsg}}
     </div>
-
-    <a class="btn btn-danger btn-block"
-       (click)="deleteText()">Delete</a>
-
   </div>
 </div>
 
