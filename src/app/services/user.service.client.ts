@@ -27,7 +27,7 @@ export class UserService {
   };
 
   register(username, password) {
-    const url = 'http://localhost:3100/api/register';
+    const url = this.baseUrl + '/api/register';
     const credentials = {
       username: username,
       password: password
@@ -40,7 +40,7 @@ export class UserService {
   }
 
   login(username, password) {
-    const url = 'http://localhost:3100/api/login';
+    const url = this.baseUrl + '/api/login';
     const credentials = {
       username: username,
       password: password
@@ -53,7 +53,7 @@ export class UserService {
   }
 
   logout() {
-    const url = 'http://localhost:3100/api/logout';
+    const url = this.baseUrl + '/api/logout';
     this.options.withCredentials = true;
     return this.http.post(url, '', this.options)
       .map((status) => {
@@ -62,7 +62,7 @@ export class UserService {
   }
 
   loggedIn() {
-    const url = 'http://localhost:3100/api/loggedIn';
+    const url = this.baseUrl + '/api/loggedIn';
     this.options.withCredentials = true;
     return this.http.post(url, '', this.options)
       .map((res: Response) => {

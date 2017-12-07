@@ -2570,7 +2570,7 @@ var UserService = (function () {
         };
     }
     UserService.prototype.register = function (username, password) {
-        var url = 'http://localhost:3100/api/register';
+        var url = this.baseUrl + '/api/register';
         var credentials = {
             username: username,
             password: password
@@ -2582,7 +2582,7 @@ var UserService = (function () {
         });
     };
     UserService.prototype.login = function (username, password) {
-        var url = 'http://localhost:3100/api/login';
+        var url = this.baseUrl + '/api/login';
         var credentials = {
             username: username,
             password: password
@@ -2594,7 +2594,7 @@ var UserService = (function () {
         });
     };
     UserService.prototype.logout = function () {
-        var url = 'http://localhost:3100/api/logout';
+        var url = this.baseUrl + '/api/logout';
         this.options.withCredentials = true;
         return this.http.post(url, '', this.options)
             .map(function (status) {
@@ -2603,7 +2603,7 @@ var UserService = (function () {
     };
     UserService.prototype.loggedIn = function () {
         var _this = this;
-        var url = 'http://localhost:3100/api/loggedIn';
+        var url = this.baseUrl + '/api/loggedIn';
         this.options.withCredentials = true;
         return this.http.post(url, '', this.options)
             .map(function (res) {
