@@ -113,12 +113,14 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_32__services_shared_service_client__ = __webpack_require__("../../../../../src/app/services/shared.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_33__services_auth_guard_service__ = __webpack_require__("../../../../../src/app/services/auth-guard.service.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_34__components_widget_widget_edit_widget_image_flickr_image_search_flickr_image_search_component__ = __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_35__services_flickr_service_client__ = __webpack_require__("../../../../../src/app/services/flickr.service.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -201,7 +203,8 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_18__services_page_service_client__["a" /* PageService */],
             __WEBPACK_IMPORTED_MODULE_24__services_widget_service_client__["a" /* WidgetService */],
             __WEBPACK_IMPORTED_MODULE_32__services_shared_service_client__["a" /* SharedService */],
-            __WEBPACK_IMPORTED_MODULE_33__services_auth_guard_service__["a" /* AuthGuard */]
+            __WEBPACK_IMPORTED_MODULE_33__services_auth_guard_service__["a" /* AuthGuard */],
+            __WEBPACK_IMPORTED_MODULE_35__services_flickr_service_client__["a" /* FlickrService */]
         ],
         bootstrap: [__WEBPACK_IMPORTED_MODULE_2__app_component__["a" /* AppComponent */]]
     })
