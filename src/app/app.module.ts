@@ -33,6 +33,7 @@ import { WidgetHtmlComponent } from './components/widget/widget-edit/widget-html
 import { WidgetTextComponent } from './components/widget/widget-edit/widget-text/widget-text.component';
 import {SharedService} from './services/shared.service.client';
 import {AuthGuard} from "./services/auth-guard.service";
+import { FlickrImageSearchComponent } from './components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component';
 
 @NgModule({
   // Declare components here
@@ -57,7 +58,8 @@ import {AuthGuard} from "./services/auth-guard.service";
     WidgetImageComponent,
     WidgetYoutubeComponent,
     WidgetHtmlComponent,
-    WidgetTextComponent
+    WidgetTextComponent,
+    FlickrImageSearchComponent
   ],
   imports: [
     BrowserModule,

@@ -9,7 +9,7 @@ module.exports=function (app) {
   var FacebookStrategy = require('passport-facebook').Strategy;
   var facebookConfig = {
     clientID     : process.env.FACEBOOK_CLIENT_ID,
-    clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
+    clientSecret : process.env.FACEBOOK_CLIENT_SECRE,
     callbackURL  : process.env.FACEBOOK_CALLBACK_URL
   };
 
