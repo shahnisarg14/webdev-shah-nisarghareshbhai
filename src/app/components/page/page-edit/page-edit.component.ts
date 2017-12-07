@@ -16,6 +16,8 @@ export class PageEditComponent implements OnInit {
   name: string;
   description: string;
   pages: Page[];
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
 
   constructor(private pageService: PageService,
               private route: ActivatedRoute,
@@ -45,6 +47,10 @@ export class PageEditComponent implements OnInit {
   }
 
   updatePage(name, description) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const page = new Page(this.pageId, name, this.websiteId, description);
     this.pageService.updatePage(this.pageId, page)
       .subscribe((page1) => {

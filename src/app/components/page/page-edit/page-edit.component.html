@@ -79,6 +79,10 @@
          class="btn btn-danger btn-block">
         Delete
       </a>
+      <div *ngIf="errorFlag"
+           class="alert alert-danger">
+        {{errorMsg}}
+      </div>
     </div>
 
   </div>

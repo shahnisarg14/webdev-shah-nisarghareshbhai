@@ -24,6 +24,8 @@ export class WidgetImageComponent implements OnInit {
   baseUrl = environment.baseUrl;
   editFlag: boolean;
   widgets: Widget[];
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
 
   constructor(private widgetService: WidgetService,
               private router: Router,
@@ -50,7 +52,11 @@ export class WidgetImageComponent implements OnInit {
     });
   }
 
-  createImage(text, width, url) {
+  createImage(text, width, url, name) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const widget = new Widget('', 'IMAGE', this.pageId, null, width, text, url, null, null, null);
     widget.text = text;
     widget.width = width;

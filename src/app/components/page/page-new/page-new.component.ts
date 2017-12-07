@@ -45,7 +45,7 @@ export class PageNewComponent implements OnInit {
   }
 
   createPage(name, description) {
-    if ((name === undefined) || (name === '')) {
+    if ((name === undefined) || (name === '') || (name === null)) {
       this.errorFlag = true;
       return;
     }
