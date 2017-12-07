@@ -21,6 +21,9 @@ export class WidgetYoutubeComponent implements OnInit {
   text: string;
   editFlag: boolean;
   widgets: Widget[];
+  name: string;
+  errorFlag: boolean;
+  errorMsg = 'Name field cannot be empty!';
   constructor(private widgetService: WidgetService,
               private route: ActivatedRoute,
               private router: Router) {
@@ -45,7 +48,11 @@ export class WidgetYoutubeComponent implements OnInit {
     });
   }
 
-  createYoutube(text, url, width) {
+  createYoutube(text, url, width, name) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const widget = new Widget('', 'YOUTUBE', this.pageId, null, width, text, url, null, null, null);
     widget.text = text;
     widget.width = width;
@@ -59,7 +66,11 @@ export class WidgetYoutubeComponent implements OnInit {
       });
   }
 
-  updateYoutube(text, url, width) {
+  updateYoutube(text, url, width, name) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const updatedYoutube = new Widget(this.widgetId, 'YOUTUBE', this.pageId, null, width, text, url, null, null, null);
     this.widgetService.updateWidget(this.widgetId, updatedYoutube)
       .subscribe((widget) => {

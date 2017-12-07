@@ -69,7 +69,11 @@ export class WidgetImageComponent implements OnInit {
           this.websiteId, 'page', this.pageId, 'widget']);
       });
   }
-  updateImage(text, width, url) {
+  updateImage(text, width, url, name) {
+    if ((name === undefined) || (name === '') || (name === null)) {
+      this.errorFlag = true;
+      return;
+    }
     const updatedImage = new Widget(this.widgetId, 'IMAGE', this.pageId, null, width, text, url, null, null, null);
     this.widgetService.updateWidget(this.widgetId, updatedImage)
       .subscribe((widget) => {
