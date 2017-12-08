@@ -1739,11 +1739,6 @@ var WidgetHtmlComponent = (function () {
             this.errorFlag = true;
             return;
         }
-        if ((name === undefined) || (name === null) || (name === '')) {
-            this.errorMsg = 'Name field should not be empty!';
-            this.errorFlag = true;
-            return;
-        }
         var updatedHTML = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */](this.widgetId, 'HTML', this.pageId, null, null, text, null, null, null, null);
         this.widgetService.updateWidget(this.widgetId, updatedHTML)
             .subscribe(function (widget) {
@@ -1755,11 +1750,6 @@ var WidgetHtmlComponent = (function () {
         var _this = this;
         if ((text === undefined) || (text === null) || (text === '')) {
             this.errorMsg = 'Text field should not be empty!';
-            this.errorFlag = true;
-            return;
-        }
-        if ((name === undefined) || (name === null) || (name === '')) {
-            this.errorMsg = 'Name field should not be empty!';
             this.errorFlag = true;
             return;
         }
@@ -1866,12 +1856,10 @@ var FlickrImageSearchComponent = (function () {
         this.flickrService
             .searchPhotos(this.searchText)
             .subscribe(function (data) {
-            console.log(data);
             var val = data._body;
             val = val.replace('jsonFlickrApi(', '');
             val = val.substring(0, val.length - 1);
             val = JSON.parse(val);
-            console.log(val);
             _this.photos = val.photos;
         });
     };
