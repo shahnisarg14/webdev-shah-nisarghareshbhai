@@ -48,6 +48,11 @@ export class WidgetHtmlComponent implements OnInit {
       this.errorFlag = true;
       return;
     }
+    if ((name === undefined) || (name === null) || (name === '')) {
+      this.errorMsg = 'Name field should not be empty!';
+      this.errorFlag = true;
+      return;
+    }
     const updatedHTML = new Widget(this.widgetId, 'HTML', this.pageId, null, null, text, null, null, null, null);
     this.widgetService.updateWidget(this.widgetId, updatedHTML)
       .subscribe((widget) => {
@@ -60,6 +65,11 @@ export class WidgetHtmlComponent implements OnInit {
   createHTML(text, name) {
     if ((text === undefined) || (text === null) || (text === '')) {
       this.errorMsg = 'Text field should not be empty!';
+      this.errorFlag = true;
+      return;
+    }
+    if ((name === undefined) || (name === null) || (name === '')) {
+      this.errorMsg = 'Name field should not be empty!';
       this.errorFlag = true;
       return;
     }
