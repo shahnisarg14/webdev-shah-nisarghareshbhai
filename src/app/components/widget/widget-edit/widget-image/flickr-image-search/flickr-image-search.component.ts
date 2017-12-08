@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FlickrService} from '../../../../../services/flickr.service.client';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Widget} from "../../../../../models/widget.model.client";
+import {WidgetService} from "../../../../../services/widget.service.client";
 
 @Component({
   selector: 'app-flickr-image-search',
@@ -14,9 +16,12 @@ export class FlickrImageSearchComponent implements OnInit {
   userId: string;
   websiteId: string;
   pageId: string;
+  widgets = [];
 
-  constructor(private flickrService: FlickrService,
-              private activatedRoutes: ActivatedRoute) {
+  constructor(private widgetService: WidgetService,
+              private flickrService: FlickrService,
+              private activatedRoutes: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -46,10 +51,14 @@ export class FlickrImageSearchComponent implements OnInit {
   selectPhoto(photo) {
     let url = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server;
     url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
-    const widget = {
-      websiteId: this.websiteId,
-      pageId: this.pageId,
-      url: url
-    };
+    const widget = new Widget('', 'IMAGE', this.pageId, null, null, null, url, null, null, null);
+    widget.url = url;
+    this.widgetService
+      .createWidget(this.pageId, widget)
+      .subscribe((widgets) => {
+        this.widgets = widgets;
+        this.router.navigate(['/user', this.userId, 'website',
+          this.websiteId, 'page', this.pageId, 'widget']);
+      });
   }
 }

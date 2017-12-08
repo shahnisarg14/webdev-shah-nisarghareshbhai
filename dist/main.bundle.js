@@ -1818,6 +1818,8 @@ module.exports = "<div class=\"container-fluid\">\n\n  <div class=\"form-group\"
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__ = __webpack_require__("../../../../../src/app/services/flickr.service.client.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__ = __webpack_require__("../../../../../src/app/models/widget.model.client.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_widget_service_client__ = __webpack_require__("../../../../../src/app/services/widget.service.client.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1830,11 +1832,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var FlickrImageSearchComponent = (function () {
-    function FlickrImageSearchComponent(flickrService, activatedRoutes) {
+    function FlickrImageSearchComponent(widgetService, flickrService, activatedRoutes, router) {
+        this.widgetService = widgetService;
         this.flickrService = flickrService;
         this.activatedRoutes = activatedRoutes;
+        this.router = router;
         this.photos = [];
+        this.widgets = [];
     }
     FlickrImageSearchComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1859,13 +1866,18 @@ var FlickrImageSearchComponent = (function () {
         });
     };
     FlickrImageSearchComponent.prototype.selectPhoto = function (photo) {
+        var _this = this;
         var url = 'https://farm' + photo.farm + '.staticflickr.com/' + photo.server;
         url += '/' + photo.id + '_' + photo.secret + '_b.jpg';
-        var widget = {
-            websiteId: this.websiteId,
-            pageId: this.pageId,
-            url: url
-        };
+        var widget = new __WEBPACK_IMPORTED_MODULE_3__models_widget_model_client__["a" /* Widget */]('', 'IMAGE', this.pageId, null, null, null, url, null, null, null);
+        widget.url = url;
+        this.widgetService
+            .createWidget(this.pageId, widget)
+            .subscribe(function (widgets) {
+            _this.widgets = widgets;
+            _this.router.navigate(['/user', _this.userId, 'website',
+                _this.websiteId, 'page', _this.pageId, 'widget']);
+        });
     };
     return FlickrImageSearchComponent;
 }());
@@ -1875,10 +1887,10 @@ FlickrImageSearchComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.html"),
         styles: [__webpack_require__("../../../../../src/app/components/widget/widget-edit/widget-image/flickr-image-search/flickr-image-search.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__services_widget_service_client__["a" /* WidgetService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_widget_service_client__["a" /* WidgetService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__services_flickr_service_client__["a" /* FlickrService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__angular_router__["b" /* Router */]) === "function" && _d || Object])
 ], FlickrImageSearchComponent);
 
-var _a, _b;
+var _a, _b, _c, _d;
 //# sourceMappingURL=flickr-image-search.component.js.map
 
 /***/ }),
