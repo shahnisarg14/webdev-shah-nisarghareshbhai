@@ -1601,7 +1601,7 @@ var WidgetHeaderComponent = (function () {
     };
     WidgetHeaderComponent.prototype.updateHeader = function (text, size) {
         var _this = this;
-        if (((size < 1) || (size > 6))) {
+        if (((size < 1) || (size > 6)) || (size === undefined) || (size === null) || (size === '')) {
             this.errorMsg = 'Size should be in between 1 to 6!';
             this.errorFlag = true;
             return;
@@ -1627,7 +1627,7 @@ var WidgetHeaderComponent = (function () {
     };
     WidgetHeaderComponent.prototype.createHeader = function (text, size) {
         var _this = this;
-        if (((size < 1) || (size > 6))) {
+        if (((size < 1) || (size > 6)) || (size === undefined) || (size === null) || (size === '')) {
             this.errorMsg = 'Size should be in between 1 to 6!';
             this.errorFlag = true;
             return;

@@ -46,7 +46,7 @@ export class WidgetHeaderComponent implements OnInit {
   }
 
   updateHeader(text, size) {
-    if (((size < 1) || (size > 6))) {
+    if (((size < 1) || (size > 6)) || (size === undefined) || (size === null) || (size === '')) {
       this.errorMsg = 'Size should be in between 1 to 6!';
       this.errorFlag = true;
       return;
@@ -73,7 +73,7 @@ export class WidgetHeaderComponent implements OnInit {
   }
 
   createHeader(text, size) {
-    if (((size < 1) || (size > 6))) {
+    if (((size < 1) || (size > 6)) || (size === undefined) || (size === null) || (size === '')) {
       this.errorMsg = 'Size should be in between 1 to 6!';
       this.errorFlag = true;
       return;
